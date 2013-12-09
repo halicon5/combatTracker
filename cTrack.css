@@ -1,0 +1,87 @@
+/* RESET CSS */
+
+/* remember to highlight inserts somehow! */
+ins {
+	text-decoration: none;
+}
+del {
+	text-decoration: line-through;
+}
+
+input, input[type="text"], input[type="submit"], input[type="submit"]:focus, input[type="button"], input[type="button"]:focus {
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;	
+	font-size: 9px;
+}
+
+select::-moz-focus-inner, input[type="submit"]::-moz-focus-inner, input[type="button"]::-moz-focus-inner
+{   
+	border : 0px;
+} 
+input[type="text"]:focus, select:focus, input[type="submit"]:focus, input[type="button"]:focus {
+	background-color: #a64242;
+	color: #DDEEEE;
+}
+
+
+
+/************** HERE IS MY CSS **************/
+/* Structural CSS */
+
+#debug_feedback {background-color: black; clear: all; padding-top: 10px;}
+
+.console {font-family: Monaco;
+		color: green;
+		background-color: black; }
+
+.spellCalcForm{
+	padding: 10px;
+	background-color: #cfc;
+	background: -webkit-gradient(linear, left top, left bottom, from(#aca), to(#cfc)); /* for webkit browsers */
+	background: -moz-linear-gradient(top,  #aca,  #cfc); /* for firefox 3.6+ */
+}
+
+table.spellCalcForm {
+	border-collapse:collapse;
+	border-spacing:0;
+}
+
+table.spellCalcRep {
+	border-collapse:collapse;
+	border-spacing:0;
+}
+
+table.spellCalcForm tr td {
+	padding-left:3px;
+	padding-right:3px;
+	padding-top: 3px;
+	margin:0px;
+	font-size:10pt;
+}
+
+table.spellCalcRep {
+	padding-left:3px;
+	padding-right:3px;
+	padding-top: 3px;
+	margin:0px;
+	font-size:10pt;
+}
+
+.spellCalcRep{
+	padding: 10px;
+	background-color: #cfc;
+	background: -webkit-gradient(linear, left top, left bottom, from(#aca), to(#cfc)); /* for webkit browsers */
+	background: -moz-linear-gradient(top,  #aca,  #cfc); /* for firefox 3.6+ */
+}
+
+.spellCalcHead {
+	font-weight: bold;
+	text-align: right;
+}
+
+.spellCalcRepheader {
+	font-weight: bold;
+	text-align: right;	
+}
+
+

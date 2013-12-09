@@ -1,0 +1,141 @@
+<html>
+<head>
+	<title>Spell Calc</title>
+
+	<link href="sCalc.css" rel="stylesheet" type="text/css" />
+
+
+	<script type="text/javascript" src="logger.js"></script>
+	<script type="text/javascript" src="sCalc.js"></script>
+	<script type="text/javascript" src="sCalcPrefs.js"></script>
+
+
+</head>
+
+<body>
+		<div class='console'>
+			<form id="commandLine" name="commandLine" size="120" onSubmit="Manager.eval(document.forms['commandLine'].elements['command'].value); updateDebugBox(); document.forms['commandLine'].elements['command'].value = ''; return false;">
+				<input class='console' size="80" name="command" /><input type="submit" value="run" />
+			</form>
+		</div>
+
+	<div class="pracManpanel">
+		<table>
+		<tr>
+
+		<td>
+			Variables must be defined as a list in a JSON object. Order is unimportant. 
+			<br />
+			Variables: <textarea id="variables" rows="10" cols="40">
+{
+	"globalDisciplineRank": 0,
+	"globalWILLrank": 10,
+	"globalWILLadj": 0,
+
+	"discpMIN": 0,
+	"stamMIN": 1,
+	"strainBASE": 4,
+	"strainEPOT": 3,
+	"strainAOE": 0,
+	"strainTARG": 4,
+	"strainRANGE": 0,
+	"strainDUR": 0,
+	"diffBASE": 20,
+	"diffEPOT": 20,
+	"diffAOE": 0,
+	"diffTARG": 10,
+	"diffRANGE": 0,
+	"diffDUR": 0,
+	"damageDiceType": "d6",
+	"damageType": "W"
+	"totalTAV": 0,
+	"totalStrain": 0,
+	"power":0 ,
+	"staging": 0,
+	"damageDice": 0,
+	"surge": 0,
+	"drain": 0,
+
+	"txtDamage": "",
+	"txtStaging": "",
+	"txtResist": "Some resist",
+	"txtDrain": "Some drain",
+	"txtSurge": "",
+
+	"EPOT": 1,
+	"targets": 1,
+	"overpower": 0,
+	"attribute": 10,
+	"spellRank": 4,
+	"disciplineRank": 4
+}
+		</textarea>
+		</td>
+
+		<td>
+			Forms are defined as an Array of Arrays.  Each sub-array represents one row.<br />
+			Rows are objects with the followings attributes: {"map": "variableName", "label": "Label Text"}<br />
+			Optional attributes are "hCol" and "fCol" for the colspan of the header or form field. "inpType":"text" will allow non-numeric input.<br />
+			Form Structure: <textarea id="formStruc" rows="10" cols="40">
+[
+	[ {"map": "EPOT", "label": "# EPOT", "hCol": 2}, {"map": "targets", "label": "# of Targets"}],
+	[ {"map": "overpower", "label": "Overpower", "fCol":2}, { "map": "damageDiceType", "label": "Damage Die:", "inpType": "text"} ],
+	[ {"map": "disciplineRank", "label": "Discipline Rank", "size": 4, "maxlength": 10 } ]
+]
+		</textarea>
+		</td>
+	</tr>
+		<td>
+			Calculation is valid javascript.  Use math and string functions to manipulate variables.  All object variables are accessible with "v."<br/>
+			Calculation: <textarea id="calculator"  rows="10" cols="40">
+v.totalTAV = v.diffBASE + (v.EPOT * v.diffEPOT) + (v.targets * v.diffTARG);
+v.totalStrain = v.strainBASE + (v.EPOT * v.strainEPOT) + (v.targets * v.strainTARG);
+		</textarea>
+		</td>
+
+		<td>
+			Reports are output defined as an array of arrays. Each sub-array represents one row.<br />
+			Each element in a sub-array represents a single cell.<br />
+			If a dynamic variable is mapped, format is "$variableName"<br/>
+			Simple cells can have the following formats: "string", "$variable" <br />
+			Complex cells are objects with {"text": "textValue", "class": "optionalCSSClass", "cols": integer}<br />
+			Concatenation of text and dynamic fields are possible by defining a "text" attribute as an array like {"text": ["a", "b", "$variable", "c"]}</br>
+			Report: <textarea id="report"  rows="10" cols="40">
+[
+	[ {"text": "Total Strain:", "class": "header"}, "$totalStrain", {"text": "Total TAV:"}, "$totalTAV" ],
+	[ { "text": "Damage: ", "class": "header"}, { "text": ["$txtDamage", " per round"]} , {"text": "Resist: ", "class":"header"}, "$txtResist"],
+	[ { "text": "Drain: ", "class": "header"}, { "text": "$txtDrain", "cols": 3}, "Yay" ]
+]
+		</textarea>
+
+		</td>
+		</tr>
+	</table>
+		function(targ, v, f, c, r)
+		
+
+		<input type='button' onclick="Manager.devStack.push (new sCalc('sCalcDisplay', 
+			'spellId' + (objCounter++),
+			document.getElementById('variables').value,
+			document.getElementById('formStruc').value,
+			document.getElementById('calculator').value,
+			document.getElementById('report').value,
+			'',
+			sCalcUserData,
+			debugLog) );" value="add new object"/>
+	</div>
+
+
+	<div id="sCalcDisplay"></div>
+
+
+
+	<div class='console'><pre id="debug_feedback"></pre></div>
+	<script type="text/javascript" src="execute.js"></script>
+
+
+
+
+</body>
+
+</html>
