@@ -1,5 +1,6 @@
 cTrack.combatantDAT = function( aCDAT ) {
 	this.name = (!aCDAT.name) ? "" : trim(aCDAT.name);
+	this.faction = (!aCDAT.faction) ? "" : trim(aCDAT.faction);
 	this.initiative = (!aCDAT.initiative) ? 0 : aCDAT.initiative;
 	this.prevTick;
 	this.nextTick;
