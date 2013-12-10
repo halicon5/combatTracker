@@ -1,0 +1,3 @@
+cTrack.tick = function(aCount) {
+	
+}

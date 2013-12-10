@@ -1,23 +1,12 @@
-var sCalc = function(targ, sCalcId, defv, f, c, r, tovr, tovrCalc, userPrefs, horiz, logger) {
+var sCalc = function(targ) {
 	this.displayBox = document.getElementById(targ);
 	this.sCalcId = sCalcId;
 	this.elems = {};
 
-	this.layout = (horiz !== "horiz") ? "vert" : "horiz";
-
-	this.defVariables = defv;
-	this.templateVarOverrides = tovr;
-	this.formStruc = f;
-	this.calculator = c;
-	this.templateCalcOverride = tovrCalc;
-	this.report = r;
-
-	this.reportFields = {};
-
 	if ( userPrefs && userPrefs.saveData) {
 		this.userPrefs = userPrefs;
 	} else {
-		this.userPrefs = new sCalcPrefs("spellCalcDefault");
+//		this.userPrefs = new cTrackPrefs("combatTrackerDefault");
 	}
 	this.logger = logger;
 	this.initialize();

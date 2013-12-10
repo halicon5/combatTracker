@@ -1,23 +1,13 @@
-Embedded Spell calculator idea
+Combat Tracker
 
 Basic Structure:
 
-Stored with each spell will be four data fields stored in the spell definition or template objects:
-	- Default to ask for discipline, overpower,
-	- DONE spell specific variables
-	- form order
-		- DONE Data-element : Label
-		- Requests default data values that have been stored in lastAnswer objects.
-	- DONE Report structure
-	- DONE calculationObject
-		- A string calculated as an EVAL.      new Function(str))() will call the data defined in the string http://moduscreate.com/javascript-performance-tips-tricks/
+Allow a GM to track multiple combatants initiatives, offensive penalties, defensive penalties, and health
 
-
-
-
-Phase two:
-	- Storing prefences.
-		- Create a lastAnswer setting for every spell. Default those values any time that page is loaded.
-		- Allow for a user to update every stored discipline rank
-
-Each field will hold a JSON object holding the values.  The JSON objects will be loaded on any screen that uses that data.
+- Add combatants
+- Track status
+- Keep a historical log
+- Keep a summary of health and next action
+- Provide a chart of all combatants
+- Provide a pop-up of the main details
+- Allow editing of the past events
