@@ -23,7 +23,7 @@ Manager.eval = function(cmd) {
 	}
 }
 
-//var Manager = new pracMan.pracManagerSVC(ManagerData, "pracManDisplay");
+var cTracker = new cTrack("combatTrackerDisplay");
 
 
 
