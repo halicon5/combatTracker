@@ -11,3 +11,33 @@ Allow a GM to track multiple combatants initiatives, offensive penalties, defens
 - Provide a chart of all combatants
 - Provide a pop-up of the main details
 - Allow editing of the past events
+
+
+Flow:
+
+- Add combatant templates, if desired.
+	- Eventually allow imports of combatants from previous engagements
+- Create an engagement
+- Assign combatants or create combatants
+	- Creating a combatant will create an independent record tied only to that engagement.
+	- Set initiative
+	- Create an summary entry for each combatant
+	- Create a combat timeline for each combatant
+- Start Combat
+	- Cycle through each combatant, identifying lowest initiative as first tick.
+
+COMBAT CYCLE:
+	- OFFLINE ACTION: Resolve current combatant action
+	- Increment any defense and offense action counters or resolve if refocused.
+	- Update any injuries
+		- If a combatant is injured, indicate if interruped
+	- OFFLINE ACTION: Receive next declared action
+	- Input duration of the next declared action
+	- REPEAT FOR ALL CURRENT TICK COMBATANTS
+
+	- Increment current counter
+	- Resort or highlight current combatants.
+	
+	- Allow insert of new combatant on current tick. Do not use initiative, instead indicating starting tick position
+		- Create summary entry
+		- Create combat timeline
