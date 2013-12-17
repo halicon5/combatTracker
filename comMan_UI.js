@@ -4,7 +4,14 @@ cTrack.comManUI = function(aComManSVC, aDispBoxId) {
 	this.cssPrefix = "cTrack";
 
 	this.elements = {};
+	this.elements.forms = {};
+	this.elements.forms.newEngagement = {};
+
 	this.subUIs = {};
+	this.contextMenuListA = {};
+	this.contextMenuArrayA = [];
+	this.contextMenuListB = {};
+	this.contextMenuArrayB = [];
 
 	this.jsCLASSNAME = "cTrack.comManUI";
 
@@ -15,7 +22,7 @@ cTrack.comManUI = function(aComManSVC, aDispBoxId) {
 		// Store core UI structure in a two column table
 		this.createMainInterfaceTable();
 		this.createTopLeftMenu();
-		this.createContextualLeftMenuNode();
+		this.createContextualLeftMenuNodes();
 	}
 
 	cTrack.comManUI.prototype.createMainInterfaceTable = function() {
@@ -49,14 +56,27 @@ cTrack.comManUI = function(aComManSVC, aDispBoxId) {
 		appendChildren(tm, comtempsDiv, engDiv);
 	}
 
-	cTrack.comManUI.prototype.createContextualLeftMenuNode = function() {
+	cTrack.comManUI.prototype.createContextualLeftMenuNodes = function() {
 		var mm = createSuperElement("div", ["id",cTrack.cssName+"UICONTEXTUALMENU"]);
-		this.elements.UILeftContextMenu = mm;
+		this.elements.UILeftContextMenuA = mm;
 		appendChildren(this.elements.UImenuCol,mm);
+
+		var bm = createSuperElement("div", ["id",cTrack.cssName+"UICONTEXTUALMENU"]);
+		this.elements.UILeftContextMenuB = bm;
+		appendChildren(this.elements.UImenuCol,bm);
 	}
 
-	cTrack.comManUI.prototype.clearContextualMenu = function() {
-		cTrack.removeDescendents(this.elements.UILeftContextMenu);
+	cTrack.comManUI.prototype.clearContextualMenuA = function() {
+		cTrack.removeDescendents(this.elements.UILeftContextMenuA);
+		this.contextMenuListA = {};
+		this.contextMenuArrayA = [];
+	}
+
+
+	cTrack.comManUI.prototype.clearContextualMenuB = function() {
+		cTrack.removeDescendents(this.elements.UILeftContextMenuB);
+		this.contextMenuListB = {};
+		this.contextMenuArrayB = [];
 	}
 
 	cTrack.comManUI.prototype.displayComTempsMenu = function() {
@@ -64,7 +84,7 @@ cTrack.comManUI = function(aComManSVC, aDispBoxId) {
 	}
 
 	cTrack.comManUI.prototype.displayEngagementsMenu = function() {
-		this.clearContextualMenu();
+		this.clearContextualMenuB();
 		this.buildNewEngagementForm();
 		this.buildEngagementList();
 	}
@@ -76,14 +96,40 @@ cTrack.comManUI = function(aComManSVC, aDispBoxId) {
 		btn.SCobj = this;
 		inp.SCobj = this;
 
+		this.elements.forms.newEngagement.engName = inp;
+
 		appendChildren(d,inp,btn);
-		appendChildren(this.elements.UILeftContextMenu, d);
+		appendChildren(this.elements.UILeftContextMenuB, d);
 	}
 
-	cTrack.comManUI.prototype.buildEngagementList = function() {
 
+	cTrack.comManUI.prototype.buildEngagementList = function() {
+		var sc = this.Manager.engagements;
+		var i = 0;
+		for (var eng in sc) {
+			this.contextMenuArrayB[i++] = sc[eng].d;	// pass a copy of the data object to the array.
+		}
+		this.contextMenuArrayB.sort( function (a,b) { 
+				if(a.timestamp && b.timestamp) {
+					return b-a;
+				}
+			}
+		)
+
+		for (i = 0; i < this.contextMenuArrayB.length; i++) {
+			this.createEngagementMenuItem(this.contextMenuArrayB[i].name);
+		}
 	}
 
 	cTrack.comManUI.prototype.addNewEngagement = function() {
-		this.Manager.addNewEngagement();
+		trim(this.elements.forms.newEngagement.engName.value);
+		this.Manager.addNewEngagement(this.elements.forms.newEngagement.engName.value);
+		this.displayEngagementsMenu();
+	}
+
+	cTrack.comManUI.prototype.createEngagementMenuItem = function(engName) {
+		var d = createSuperElement("div")
+		var a = createSuperElement("a", ["innerHTML",engName], ["onclick","this.SCobj.selectEngagement(); return false;"] );
+		appendChildren(d, a);
+		appendChildren(this.elements.UILeftContextMenuB, d);
 	}

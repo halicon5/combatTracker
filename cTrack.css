@@ -28,14 +28,14 @@ input[type="text"]:focus, select:focus, input[type="submit"]:focus, input[type="
 /************** HERE IS MY CSS **************/
 /* Structural CSS */
 
-#cTrackUITABLE {width:800px;}
+#cTrackUITABLE {width:1200px;}
 #cTrackLEFTMENU {	width:200px;
 	padding: 10px;
 	background-color: #cfc;
 	background: -webkit-gradient(linear, left top, left bottom, from(#aca), to(#cfc)); /* for webkit browsers */
 	background: -moz-linear-gradient(top,  #aca,  #cfc); /* for firefox 3.6+ */
 	}
-#cTrackMAINCONTENT {	width:600px;
+#cTrackMAINCONTENT {	width:1000px;
 	padding: 10px;
 	background-color: #cfc;
 	background: -webkit-gradient(linear, left top, left bottom, from(#aca), to(#cfc)); /* for webkit browsers */
