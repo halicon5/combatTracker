@@ -28,16 +28,16 @@ Flow:
 
 COMBAT CYCLE:
 	- OFFLINE ACTION: Resolve current combatant action
-	- Increment any defense and offense action counters or resolve if refocused.
+	- Increment any defense and offense action counters or resolve if conclusion is a refocus.
 	- Update any injuries
-		- If a combatant is injured, indicate if interruped
+		- If a combatant is injured, indicate if interruped and give the user an option to add an interrupt
 	- OFFLINE ACTION: Receive next declared action
 	- Input duration of the next declared action
 	- REPEAT FOR ALL CURRENT TICK COMBATANTS
 
 	- Increment current counter
 	- Resort or highlight current combatants.
-	
+
 	- Allow insert of new combatant on current tick. Do not use initiative, instead indicating starting tick position
 		- Create summary entry
 		- Create combat timeline

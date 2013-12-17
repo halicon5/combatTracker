@@ -2,9 +2,12 @@ var cTrack = function(targ, params, userPrefs) {
 	if (!params) {
 		var params = {};
 	}
-	this.displayBox = document.getElementById(targ);
+	this.displayBoxId = targ;
 	this.cTrackId = params.cTrackId;
 	this.elems = {};
+	this.mandat = new cTrack.comManDAT("v0.1");
+	this.Manager = new cTrack.comManSVC(this.mandat,this.displayBoxId);
+	this.UI = this.Manager.UI;
 
 	if ( userPrefs && userPrefs.saveData) {
 		this.userPrefs = userPrefs;
@@ -16,6 +19,7 @@ var cTrack = function(targ, params, userPrefs) {
 
 }
 	
+	cTrack.cssName = "cTrack";
 
 	cTrack.prototype.initialize = function() {
 		this.log("CALL cTrack.prototype.initialize = function()");
@@ -45,11 +49,6 @@ var cTrack = function(targ, params, userPrefs) {
 		this.log("FINISH cTrack.prototype.updateUserPrefs = function(inpObj, inpDef)");
 	}
 
-	cTrack.prototype.updateReport = function(inputObj) {
-		for (var k in this.reportFields) {
-			this.reportFields[k].innerHTML = this.v[k];
-		}
-	}
 
 
 
@@ -92,7 +91,14 @@ var cTrack = function(targ, params, userPrefs) {
 
 
 
-
+	cTrack.removeDescendents = function(node) {
+		if (node && node.hasChildNodes() ) {
+			while ( node.hasChildNodes() ) {
+				cTrack.removeDescendents(node.firstChild);
+				node.removeChild(node.firstChild);
+			}
+		}
+	}
 	
 
 	/*

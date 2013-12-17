@@ -28,8 +28,29 @@ input[type="text"]:focus, select:focus, input[type="submit"]:focus, input[type="
 /************** HERE IS MY CSS **************/
 /* Structural CSS */
 
-#debug_feedback {background-color: black; clear: all; padding-top: 10px;}
+#cTrackUITABLE {width:800px;}
+#cTrackLEFTMENU {	width:200px;
+	padding: 10px;
+	background-color: #cfc;
+	background: -webkit-gradient(linear, left top, left bottom, from(#aca), to(#cfc)); /* for webkit browsers */
+	background: -moz-linear-gradient(top,  #aca,  #cfc); /* for firefox 3.6+ */
+	}
+#cTrackMAINCONTENT {	width:600px;
+	padding: 10px;
+	background-color: #cfc;
+	background: -webkit-gradient(linear, left top, left bottom, from(#aca), to(#cfc)); /* for webkit browsers */
+	background: -moz-linear-gradient(top,  #aca,  #cfc); 
+	}
+#cTrackUITOPMENU, #cTrackUICONTEXTUALMENU {
+	padding:5px;
+	margin:5px;
+	background-color: #eee;
+	background: -webkit-gradient(linear, left top, left bottom, from(#eee), to(#99d)); /* for webkit browsers */
+	background: -moz-linear-gradient(top,  #eee,  #99d);
+	border-radius:8pt;
+}
 
+#debug_feedback {background-color: black; clear: all; padding-top: 10px;}
 .console {font-family: Monaco;
 		color: green;
 		background-color: black; }
