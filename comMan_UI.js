@@ -57,11 +57,11 @@ cTrack.comManUI = function(aComManSVC, aDispBoxId) {
 	}
 
 	cTrack.comManUI.prototype.createContextualLeftMenuNodes = function() {
-		var mm = createSuperElement("div", ["id",cTrack.cssName+"UICONTEXTUALMENU"]);
+		var mm = createSuperElement("div", ["id",cTrack.cssName+"UICONTEXTUALMENUA"]);
 		this.elements.UILeftContextMenuA = mm;
 		appendChildren(this.elements.UImenuCol,mm);
 
-		var bm = createSuperElement("div", ["id",cTrack.cssName+"UICONTEXTUALMENU"]);
+		var bm = createSuperElement("div", ["id",cTrack.cssName+"UICONTEXTUALMENUB"]);
 		this.elements.UILeftContextMenuB = bm;
 		appendChildren(this.elements.UImenuCol,bm);
 	}
@@ -111,7 +111,10 @@ cTrack.comManUI = function(aComManSVC, aDispBoxId) {
 		}
 		this.contextMenuArrayB.sort( function (a,b) { 
 				if(a.timestamp && b.timestamp) {
-					return b-a;
+					return b.timestamp-a.timestamp;
+				}
+				else {
+					return false;
 				}
 			}
 		)
@@ -122,14 +125,21 @@ cTrack.comManUI = function(aComManSVC, aDispBoxId) {
 	}
 
 	cTrack.comManUI.prototype.addNewEngagement = function() {
-		trim(this.elements.forms.newEngagement.engName.value);
-		this.Manager.addNewEngagement(this.elements.forms.newEngagement.engName.value);
+		var engName = trim(this.elements.forms.newEngagement.engName.value);
+		this.Manager.addNewEngagement(engName);
 		this.displayEngagementsMenu();
+		this.selectEngagement(engName);
 	}
 
 	cTrack.comManUI.prototype.createEngagementMenuItem = function(engName) {
 		var d = createSuperElement("div")
-		var a = createSuperElement("a", ["innerHTML",engName], ["onclick","this.SCobj.selectEngagement(); return false;"] );
+		var a = createSuperElement("a", ["innerHTML",engName], ["onclick","this.SCobj.selectEngagement(this.onClickParam); return false;"] );
+		a.SCobj = this;
+		a.onClickParam = engName;
 		appendChildren(d, a);
 		appendChildren(this.elements.UILeftContextMenuB, d);
+	}
+
+	cTrack.comManUI.prototype.selectEngagement = function(engName) {
+		this.Manager.selectEngagement(engName);
 	}

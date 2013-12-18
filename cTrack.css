@@ -32,22 +32,31 @@ input[type="text"]:focus, select:focus, input[type="submit"]:focus, input[type="
 #cTrackLEFTMENU {	width:200px;
 	padding: 10px;
 	background-color: #cfc;
-	background: -webkit-gradient(linear, left top, left bottom, from(#aca), to(#cfc)); /* for webkit browsers */
-	background: -moz-linear-gradient(top,  #aca,  #cfc); /* for firefox 3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, from(#464), to(#686)); /* for webkit browsers */
+	background: -moz-linear-gradient(top,  #464,  #686); /* for firefox 3.6+ */
+	border-radius:12pt
 	}
+
 #cTrackMAINCONTENT {	width:1000px;
 	padding: 10px;
 	background-color: #cfc;
-	background: -webkit-gradient(linear, left top, left bottom, from(#aca), to(#cfc)); /* for webkit browsers */
-	background: -moz-linear-gradient(top,  #aca,  #cfc); 
+	background: -webkit-gradient(linear, left top, left bottom, from(#020), to(#242)); /* for webkit browsers */
+	background: -moz-linear-gradient(top,  #020,  #242); 
+	border-radius:12pt
 	}
-#cTrackUITOPMENU, #cTrackUICONTEXTUALMENU {
+#cTrackUITOPMENU, #cTrackUICONTEXTUALMENUB, #cTrackUICONTEXTUALMENUA  {
 	padding:5px;
 	margin:5px;
+	max-height:400px;
 	background-color: #eee;
-	background: -webkit-gradient(linear, left top, left bottom, from(#eee), to(#99d)); /* for webkit browsers */
-	background: -moz-linear-gradient(top,  #eee,  #99d);
+	background: -webkit-gradient(linear, left top, left bottom, from(#99b), to(#eee)); /* for webkit browsers */
+	background: -moz-linear-gradient(top,  #99b,  #eee);
 	border-radius:8pt;
+	overflow:auto;
+}
+
+#cTrackUICONTEXTUALMENUB, #cTrackUICONTEXTUALMENUA {
+	height: 300px;
 }
 
 #debug_feedback {background-color: black; clear: all; padding-top: 10px;}
