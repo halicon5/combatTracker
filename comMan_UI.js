@@ -142,4 +142,11 @@ cTrack.comManUI = function(aComManSVC, aDispBoxId) {
 
 	cTrack.comManUI.prototype.selectEngagement = function(engName) {
 		this.Manager.selectEngagement(engName);
+		this.clearMainContent();
+		this.subUIs.engagement = new cTrack.engagementUI(	{UI: this, targ: this.elements.UIcontent, Manager: this.Manager, 
+													data: this.Manager.currentEngagement.d, svc:this.Manager.currentEngagement}	);
+	}
+
+	cTrack.comManUI.prototype.clearMainContent = function() {
+		cTrack.removeDescendents(this.elements.UIcontent);
 	}

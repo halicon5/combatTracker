@@ -60,6 +60,17 @@ input[type="text"]:focus, select:focus, input[type="submit"]:focus, input[type="
 }
 
 #debug_feedback {background-color: black; clear: all; padding-top: 10px;}
+
+.engagementMain {
+	padding:5px;
+	margin:5px;
+	background-color: #eee;
+	background: -webkit-gradient(linear, left top, left bottom, from(#99b), to(#eee)); /* for webkit browsers */
+	background: -moz-linear-gradient(top,  #99b,  #eee);
+	border-radius:8pt;
+	overflow:auto;
+}
+
 .console {font-family: Monaco;
 		color: green;
 		background-color: black; }

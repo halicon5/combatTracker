@@ -5,7 +5,7 @@ cTrack.comManSVC = function(aComManDAT, aDispBoxId) {
 	this.engagements = {}; // svc objects only
 	this.actorTemplates = {}; // svc object only
 
-	this.currentEngagement = null;
+	this.currentEngagement = null;	// reference to the engagementSVC
 
 	this.jsCLASSNAME = "cTrack.comManSVC";
 }
@@ -27,8 +27,8 @@ cTrack.comManSVC = function(aComManDAT, aDispBoxId) {
 	}
 
 	cTrack.comManSVC.prototype.selectEngagement = function (engName) {
-		if (this.d.engagements[engName]) {
-			this.currentEngagement = engName;
+		if (this.d.engagements[engName] && this.engagements[engName] ) {
+			this.currentEngagement = this.engagements[engName];
 		}
 		else {
 			alert("Error: Engagement '" + engName + "' does not exist.");
