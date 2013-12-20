@@ -60,6 +60,7 @@ cTrack.engagementUI = function(params) {
 
 	cTrack.engagementUI.prototype.addNewCombatantToEngagement = function() {
 		if (cTrack.validate.newCombatantForm(this.elements.newCombForm) === true) {
-
+			this.svc.addCombatantFromForm(this.elements.newCombForm);
+			this.updateDisplay();
 		};
 	}

@@ -1,4 +1,4 @@
-cTrack.combatantSVC = function(aCombatnatDAT) {
+cTrack.combatantSVC = function(aCombatantDAT) {
 	this.d = aCombatantDAT;
 
 	this.jsCLASSNAME = "cTrack.combatantSVC";

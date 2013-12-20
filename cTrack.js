@@ -164,13 +164,25 @@ str=str.replace(/\\\\/g,'\\');
 return str;
 }	
 function trim(stringToTrim) {
-	return stringToTrim.replace(/^\s+|\s+$/g,"");
+	if (stringToTrim.replace) {
+		return stringToTrim.replace(/^\s+|\s+$/g,"");
+	} else {
+		return stringToTrim;
+	}
 }
 function ltrim(stringToTrim) {
-	return stringToTrim.replace(/^\s+/,"");
+	if (stringToTrim.replace) {
+		return stringToTrim.replace(/^\s+/,"");
+	} else {
+		return stringToTrim;
+	}
 }
 function rtrim(stringToTrim) {
-	return stringToTrim.replace(/\s+$/,"");
+	if (stringToTrim.replace) {
+		return stringToTrim.replace(/\s+$/,"");
+	} else {
+		return stringToTrim;
+	}
 }
 
 function appendChildren() {

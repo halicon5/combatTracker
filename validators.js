@@ -4,9 +4,10 @@ cTrack.validate = {};
 
 cTrack.validate.newCombatantForm = function (formFields) {
 	formFields.inpCombName.value = trim(formFields.inpCombName.value);
+	var passflag = true;
 	if (trim(formFields.inpCombName.value) == "") {
 		alert("A combatant name is required.");
-		return false;
+		passflag = false;
 	}
 
 	if (!isNaN(formFields.inpInitiative.value) ) {
@@ -73,4 +74,6 @@ cTrack.validate.newCombatantForm = function (formFields) {
 	} else {
 		formFields.inpBaseDR.value = 50;
 	}
+
+	return passflag;
 }
