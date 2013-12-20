@@ -12,6 +12,12 @@ cTrack.engagementUI = function(params) {
 	this.elements.combatChart = {};
 	this.elements.newCombForm = {};
 
+	this.combatants = {};	// collection of combatant UIs
+	this.combatantsAlpha = [];	// sorted list of combatants by name
+	this.combatantsFactionAlpha = []; // sorted list of combatants by faction/name
+	this.combatantsNextUp = []; // sorted list of combatants by upcoming action
+
+
 	this.jsCLASSNAME = "cTrack.engagementUI";
 
 	this.initialize();
