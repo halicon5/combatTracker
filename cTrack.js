@@ -100,6 +100,11 @@ var cTrack = function(targ, params, userPrefs) {
 		}
 	}
 	
+	cTrack.removeElement = function(node) {
+		if (node && node.parentNode) {
+		    node.parentNode.removeChild(node);
+		}
+	}
 
 	/*
 	Service cleanup functions

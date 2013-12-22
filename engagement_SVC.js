@@ -9,8 +9,18 @@ cTrack.engagementSVC = function(aEngDAT, aName) {
 
 
 	cTrack.engagementSVC.prototype.initialize = function() {
-
+		this.setCombatantSvcs();
 	}
+
+	cTrack.engagementSVC.prototype.setCombatantSvcs = function() {
+		if (this.d.combatants) {
+			var sc = this.d.combatants;
+ 			for (var comb in sc) {
+ 				this.combatants[comb] = new cTrack.combatantSVC(sc[comb]);
+ 			}
+		}
+	}
+
 
 	cTrack.engagementSVC.prototype.addCombatantFromForm = function(f) {
 		var dat = {};
@@ -38,6 +48,7 @@ cTrack.engagementSVC = function(aEngDAT, aName) {
 			}
 			safeName = origName+'-'+increm;
 		}
+		dat.name = safeName;
 		newCombDAT.name = safeName;
 		this.d.combatants[safeName] = dat;
 		this.combatants[safeName] = newCombSVC;

@@ -15,7 +15,18 @@ cTrack.combatantUI = function(params) {
 }
 
 	cTrack.combatantUI.prototype.initialize = function() {
+		this.createCombatantRow();
+	}
 
+	cTrack.combatantUI.prototype.createCombatantRow = function() {
+		var row = createSuperElement("div",["class","combRow"]);
+		var name = createSuperElement("div",["class","combNameCell"], ["innerHTML",this.data.name]);
+		var tickCells = createSuperElement("div", ["class","tickCellsBunch"]);
+		this.elements.row = row;
+		this.elements.name = name;
+		this.elements.tickCells = tickCells;
+		appendChildren(row, name, tickCells);
+		appendChildren(this.dispBox, row);
 	}
 
 	// returns an object with a list of form field inputs.

@@ -26,6 +26,19 @@ cTrack.engagementUI = function(params) {
 	cTrack.engagementUI.prototype.initialize = function() {
 		this.createTopSummary();
 		this.createMainBox();
+		this.createCombatantChart();
+		this.initializeCombatantUIs();
+	}
+
+	cTrack.engagementUI.prototype.initializeCombatantUIs = function() {
+		if (this.svc && this.svc.combatants) {
+			var sc = this.svc.combatants;
+			for (var comb in sc) {
+				if (!this.combatants[comb]) {
+					this.combatants[comb] = new cTrack.combatantUI({UI:this.UI,Manager:this.Manager,svc:sc[comb], data:sc[comb].d, targ:this.elements.combatantChart});
+				}
+			}
+		}
 	}
 
 	cTrack.engagementUI.prototype.createMainBox = function() {
@@ -33,6 +46,14 @@ cTrack.engagementUI = function(params) {
 		this.elements.mainBox = box;
 		appendChildren(this.dispBox, box);
 	}
+
+	cTrack.engagementUI.prototype.createCombatantChart = function() {
+		var box = createSuperElement("div", ["class","combatantChart"]);
+		this.elements.combatantChart = box;
+		appendChildren(this.elements.mainBox, box);
+	}
+
+
 
 	cTrack.engagementUI.prototype.createTopSummary = function() {
 		var box = createSuperElement("div", ["class","engagementSummary"]);
@@ -61,8 +82,9 @@ cTrack.engagementUI = function(params) {
 	}
 
 	cTrack.engagementUI.prototype.updateDisplay = function() {
-
+		this.initializeCombatantUIs();
 	}
+
 
 	cTrack.engagementUI.prototype.addNewCombatantToEngagement = function() {
 		if (cTrack.validate.newCombatantForm(this.elements.newCombForm) === true) {
