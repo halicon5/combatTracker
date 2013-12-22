@@ -4,6 +4,7 @@ cTrack.engagementDAT = function(aName, aEngDAT) {
 	this.timestamp = Date.now();
 
 	this.status = "Set-up";
+	this.startingTick = 0;
 	this.currentTick = 0;
 	this.combatants = {};
 	this.notes = "";

@@ -8,6 +8,8 @@ cTrack.combatantUI = function(params) {
 	this.svc = params.svc;		// current object level svc
 
 	this.elements = {};
+	this.elements.quickSum = {};
+	this.elements.tickCells = {};
 
 	this.jsCLASSNAME = "cTrack.combatantUI";
 
@@ -20,13 +22,31 @@ cTrack.combatantUI = function(params) {
 
 	cTrack.combatantUI.prototype.createCombatantRow = function() {
 		var row = createSuperElement("div",["class","combRow"]);
-		var name = createSuperElement("div",["class","combNameCell"], ["innerHTML",this.data.name]);
-		var tickCells = createSuperElement("div", ["class","tickCellsBunch"]);
+		var name = this.createNameCol();
+		var quickSum = this.createQuickSummary();
+		var tickCells = this.createTickCells();
 		this.elements.row = row;
 		this.elements.name = name;
-		this.elements.tickCells = tickCells;
-		appendChildren(row, name, tickCells);
+		appendChildren(row, name, quickSum, tickCells);
 		appendChildren(this.dispBox, row);
+	}
+
+	cTrack.combatantUI.prototype.createNameCol = function() {
+		return createSuperElement("div",["class","combNameCell"], ["innerHTML",this.data.name]);
+	}
+
+	cTrack.combatantUI.prototype.createQuickSummary = function() {
+		var quickSum = createSuperElement("div", ["class","combQuickSum"]);
+		var nextTick = createSuperElement("div", ["class","combNextTick"], ["innerHTML",this.data.nextTick]);
+		this.elements.quickSum.nextTick = nextTick;
+		appendChildren(quickSum,nextTick);
+		return quickSum;
+	}
+
+	cTrack.combatantUI.prototype.createTickCells = function() {
+		var tickCellsBox = createSuperElement("div", ["class","tickCellsBunch"]);
+		this.elements.tickCellsBox = tickCellsBox;
+		return tickCellsBox;
 	}
 
 	// returns an object with a list of form field inputs.

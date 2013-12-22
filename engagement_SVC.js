@@ -10,6 +10,7 @@ cTrack.engagementSVC = function(aEngDAT, aName) {
 
 	cTrack.engagementSVC.prototype.initialize = function() {
 		this.setCombatantSvcs();
+		this.setStartingInitiative();
 	}
 
 	cTrack.engagementSVC.prototype.setCombatantSvcs = function() {
@@ -21,6 +22,18 @@ cTrack.engagementSVC = function(aEngDAT, aName) {
 		}
 	}
 
+	cTrack.engagementSVC.prototype.setStartingInitiative = function() {
+		var lowestInit = 0;
+		if (this.d.combatants) {
+			var sc = this.d.combatants;
+			for (var comb in sc) {
+				if (sc[comb].initiative < lowestInit) {
+					lowestInit = sc[comb].initiative;
+				}
+			}
+		}
+		this.d.startingTick = lowestInit;
+	}
 
 	cTrack.engagementSVC.prototype.addCombatantFromForm = function(f) {
 		var dat = {};
@@ -49,7 +62,10 @@ cTrack.engagementSVC = function(aEngDAT, aName) {
 			safeName = origName+'-'+increm;
 		}
 		dat.name = safeName;
+		dat.prevTick = dat.initiative;
+		dat.nextTick = dat.initiative;
 		newCombDAT.name = safeName;
 		this.d.combatants[safeName] = dat;
 		this.combatants[safeName] = newCombSVC;
+		this.setStartingInitiative();
 	}

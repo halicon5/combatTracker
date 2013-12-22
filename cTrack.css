@@ -102,6 +102,29 @@ input[type="text"]:focus, select:focus, input[type="submit"]:focus, input[type="
 	border-radius:8pt;
 }
 
+
+.combatantChart {
+	max-height:600px;
+	overflow:auto;
+}
+
+.combRow {
+	padding:3px;
+	border:1px solid;
+	border-color:#666;
+	border-radius:5px;
+}
+
+.combRow div, .combQuickSum div {
+	display:inline-block;
+	overflow:hidden;
+	padding-left:3px;
+	padding-right:3px;
+}
+
+.combNameCell {width:100px;max-width:100px;font-weight:bold;}
+.combNextTick {width:24px;max-width:24px;font-weight:bold;}
+
 .console {font-family: Monaco;
 		color: green;
 		background-color: black; }

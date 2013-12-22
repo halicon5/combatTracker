@@ -71,11 +71,14 @@ cTrack.engagementUI = function(params) {
 		var engStatusLbl = createSuperElement("td", ["innerHTML","Status:"]);
 		this.elements.summary.status = createSuperElement("td", ["innerHTML",this.data.status], ["class","smallSummary"]);
 
+		var startTickLbl = createSuperElement("td", ["innerHTML","Starting Tick:"]);
+		this.elements.summary.startingTick = createSuperElement("td", ["innerHTML",this.data.startingTick], ["class","smallSummary"]);
+
 		appendChildren(this.dispBox, box);
 		appendChildren(box, table);
 		appendChildren(table,topRow,row2nd);
 		appendChildren(topRow, engNameLbl, this.elements.summary.engName , initCountLbl, this.elements.summary.currentTick,this.elements.newCombatantCell);
-		appendChildren(row2nd, engStatusLbl, this.elements.summary.status);
+		appendChildren(row2nd, engStatusLbl, this.elements.summary.status, startTickLbl, this.elements.summary.startingTick);
 
 		this.elements.newCombForm = cTrack.combatantUI.createNewCombatantFormENG(this.elements.newCombatantCell, this, "addNewCombatantToEngagement()");
 
@@ -83,8 +86,14 @@ cTrack.engagementUI = function(params) {
 
 	cTrack.engagementUI.prototype.updateDisplay = function() {
 		this.initializeCombatantUIs();
+		this.updateTopSummary();
+		this.getNextUpSortOrder();
+		this.updateTickChartDisplay();
 	}
 
+	cTrack.engagementUI.prototype.updateTopSummary = function() {
+		this.elements.summary.startingTick.innerHTML = this.data.startingTick;
+	}
 
 	cTrack.engagementUI.prototype.addNewCombatantToEngagement = function() {
 		if (cTrack.validate.newCombatantForm(this.elements.newCombForm) === true) {
@@ -92,3 +101,25 @@ cTrack.engagementUI = function(params) {
 			this.updateDisplay();
 		};
 	}
+
+	cTrack.engagementUI.prototype.getNextUpSortOrder = function() {
+		this.combatantsNextUp = [];
+		var increm = 0;
+		for (var comb in this.combatants) {
+			this.combatantsNextUp[increm++] = this.combatants[comb];
+		}
+		this.combatantsNextUp.sort(function(a,b) {
+			if (a.data && b.data) {
+				return a.data.nextTick - b.data.nextTick;
+			} else {
+				return false;
+			}
+		});
+	}
+
+	cTrack.engagementUI.prototype.updateTickChartDisplay = function() {
+		for (var i = 0; i < this.combatantsNextUp.length; i++) {
+			appendChildren(this.elements.combatantChart,this.combatantsNextUp[i].elements.row);
+		}
+	}
+
