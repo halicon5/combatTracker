@@ -35,6 +35,38 @@ cTrack.engagementSVC = function(aEngDAT, aName) {
 		this.d.startingTick = lowestInit;
 	}
 
+	cTrack.engagementSVC.prototype.setMaxTick = function() {
+		var maxTick = this.d.maxTick;
+		if (this.d.combatants) {
+			var sc = this.d.combatants;
+			for (var comb in sc) {
+				if (sc[comb].nextTick > maxTick) {
+					maxTick = sc[comb].nextTick;
+				}
+			}
+		}
+		this.d.maxTick = maxTick;
+	}
+
+	cTrack.engagementSVC.prototype.updateEngagement = function() {
+		this.setStartingInitiative();
+		this.setMaxTick();
+		if (this.d.status === 'active') {
+			this.updateCombatants();
+		}
+	}
+
+	cTrack.engagementSVC.prototype.updateCombatants = function() {
+		for (var comb in this.combatants) {
+			this.combatants[comb].update();
+		}
+	}
+
+	cTrack.engagementSVC.prototype.startCombat = function() {
+		this.updateEngagement();
+		this.d.status = 'active';
+	}
+
 	cTrack.engagementSVC.prototype.addCombatantFromForm = function(f) {
 		var dat = {};
 		dat.name = f.inpCombName.value;
@@ -63,7 +95,7 @@ cTrack.engagementSVC = function(aEngDAT, aName) {
 		dat.prevTick = dat.initiative;
 		dat.nextTick = dat.initiative;
 		var newCombDAT = new cTrack.combatantDAT(dat);
-		var newCombSVC = new cTrack.combatantSVC(newCombDAT);
+		var newCombSVC = new cTrack.combatantSVC(newCombDAT, this);
 
 		newCombDAT.prevTick = newCombDAT.initiative;
 		newCombDAT.nextTick = newCombDAT.initiative;
@@ -71,5 +103,5 @@ cTrack.engagementSVC = function(aEngDAT, aName) {
 		newCombDAT.name = safeName;
 		this.d.combatants[safeName] = newCombDAT;
 		this.combatants[safeName] = newCombSVC;
-		this.setStartingInitiative();
+		this.updateEngagement();
 	}

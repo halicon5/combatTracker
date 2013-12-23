@@ -25,6 +25,11 @@ cTrack.combatantUI = function(params) {
 		this.createLeftReferenceLink();
 	}
 
+	cTrack.combatantUI.prototype.updateDisplay = function() {
+		this.createMissingTickCells();
+		this.drawTickCells();
+	}
+
 	cTrack.combatantUI.prototype.createLeftReferenceLink = function() {
 		var div = createSuperElement("div", ["class", "combatantLeftLink"] );
 		var fact = createSuperElement("div", ["class", "combLeftFaction"], ["innerHTML",this.data.faction]);
@@ -41,7 +46,7 @@ cTrack.combatantUI = function(params) {
 		var row = createSuperElement("div",["class","combRow"]);
 		var name = this.createNameCol();
 		var quickSum = this.createQuickSummary();
-		var tickCells = this.createTickCells();
+		var tickCells = this.createTickCellsContainer();
 		this.elements.row = row;
 		this.elements.name = name;
 		appendChildren(row, name, quickSum, tickCells);
@@ -60,10 +65,36 @@ cTrack.combatantUI = function(params) {
 		return quickSum;
 	}
 
-	cTrack.combatantUI.prototype.createTickCells = function() {
+	cTrack.combatantUI.prototype.createTickCellsContainer = function() {
 		var tickCellsBox = createSuperElement("div", ["class","tickCellsBunch"]);
 		this.elements.tickCellsBox = tickCellsBox;
 		return tickCellsBox;
+	}
+
+	cTrack.combatantUI.prototype.createTickCell = function(tickCount) {
+		var div = createSuperElement("div", ["class","tickCell "], ["innerHTML",tickCount + ' ACT']);
+		this.elements.tickCells[tickCount] = div;
+	}
+
+	cTrack.combatantUI.prototype.createEmptyTickCell = function(tickCount) {
+		var div = createSuperElement("div", ["class","tickCell emptyCell"], ["innerHTML",tickCount]);
+		this.elements.tickCells[tickCount] = div;
+	}
+
+	cTrack.combatantUI.prototype.createMissingTickCells = function() {
+		for (var i = this.svc.engagementSvc.d.startingTick; i <= this.svc.engagementSvc.d.maxTick; i++) {
+			if (this.data.ticks[i] && !this.elements.tickCells[i]) {
+				this.createTickCell(i);
+			} else if (!this.elements.tickCells[i] ) {
+				this.createEmptyTickCell(i);
+			}
+		}
+	}
+
+	cTrack.combatantUI.prototype.drawTickCells = function() {
+		for (var i = this.svc.engagementSvc.d.startingTick; i <= this.svc.engagementSvc.d.maxTick; i++) {
+			appendChildren(this.elements.tickCellsBox, this.elements.tickCells[i]);
+		}
 	}
 
 	// returns an object with a list of form field inputs.

@@ -23,6 +23,8 @@ cTrack.combatantDAT = function( aCDAT ) {
 	this.offSeries = 0;
 	this.defSeries = 0;
 
+	this.offLog = {};
+	this.defLog = {};
 	this.injuryLog = {};
 	this.ticks = {};
 

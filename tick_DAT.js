@@ -6,5 +6,4 @@ cTrack.tickDAT = function(aTick) {
 	this.declaredAction = "";
 	this.plannedDuration = 0;
 	this.actualDuration = 0;
-	this.nextTick = this.tickId + 1;
 }

@@ -80,9 +80,12 @@ cTrack.engagementUI = function(params) {
 
 		var engStatusLbl = createSuperElement("td", ["innerHTML","Status:"]);
 		this.elements.summary.status = createSuperElement("td", ["innerHTML",this.data.status], ["class","smallSummary"]);
-
+		this.elements.summary.startBtn = createSuperElement("input", ["type","button"], ["value","start"], ["onclick","this.SCobj.startCombat();"] );
+		this.elements.summary.startBtn.SCobj = this;
+		appendChildren(this.elements.summary.status, this.elements.summary.startBtn);
 		var startTickLbl = createSuperElement("td", ["innerHTML","Starting Tick:"]);
 		this.elements.summary.startingTick = createSuperElement("td", ["innerHTML",this.data.startingTick], ["class","smallSummary"]);
+
 
 		appendChildren(this.dispBox, box);
 		appendChildren(box, table);
@@ -91,6 +94,7 @@ cTrack.engagementUI = function(params) {
 		appendChildren(row2nd, engStatusLbl, this.elements.summary.status, startTickLbl, this.elements.summary.startingTick);
 
 		this.elements.newCombForm = cTrack.combatantUI.createNewCombatantFormENG(this.elements.newCombatantCell, this, "addNewCombatantToEngagement()");
+
 
 	}
 
@@ -105,6 +109,8 @@ cTrack.engagementUI = function(params) {
 
 	cTrack.engagementUI.prototype.updateTopSummary = function() {
 		this.elements.summary.startingTick.innerHTML = this.data.startingTick;
+//		this.elements.summary.status.innerHTML = this.data.status;
+//		appendChildren(this.elements.summary.status, this.elements.summary.status.startBtn);
 	}
 
 	cTrack.engagementUI.prototype.addNewCombatantToEngagement = function() {
@@ -150,6 +156,7 @@ cTrack.engagementUI = function(params) {
 
 	cTrack.engagementUI.prototype.updateTickChartDisplay = function() {
 		for (var i = 0; i < this.combatantsNextUp.length; i++) {
+			this.combatantsNextUp[i].updateDisplay();
 			appendChildren(this.elements.combatantChart,this.combatantsNextUp[i].elements.row);
 		}
 	}
@@ -162,3 +169,10 @@ cTrack.engagementUI = function(params) {
 		}
 	}
 
+	cTrack.engagementUI.prototype.startCombat = function() {
+		if ( !confirm("Are you sure you want to start? Have you added all starting combatants?") ) {
+			return false;
+		}
+		this.svc.startCombat();
+		this.updateDisplay();
+	}

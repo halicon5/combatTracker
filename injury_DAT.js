@@ -1,4 +1,5 @@
 cTrack.injuryDAT = function( aInj ) {
+	this.tickNumber = 0;
 	this.LB = 0;
 	this.MB = 0;
 	this.SB = 0;

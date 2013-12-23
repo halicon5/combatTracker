@@ -30,6 +30,7 @@ input[type="text"]:focus, select:focus, input[type="submit"]:focus, input[type="
 
 #cTrackUITABLE {width:1200px; max-width:1200px;max-height:800px;}
 #cTrackLEFTMENU {	width:240px;
+	max-width:240px;
 	padding: 10px;
 	background-color: #cfc;
 	background: -webkit-gradient(linear, left top, left bottom, from(#464), to(#686)); /* for webkit browsers */
@@ -38,6 +39,7 @@ input[type="text"]:focus, select:focus, input[type="submit"]:focus, input[type="
 	}
 
 #cTrackMAINCONTENT {	width:960px;
+	max-width:960px;
 	padding: 10px;
 	background-color: #cfc;
 	background: -webkit-gradient(linear, left top, left bottom, from(#020), to(#242)); /* for webkit browsers */
@@ -105,10 +107,12 @@ input[type="text"]:focus, select:focus, input[type="submit"]:focus, input[type="
 
 .combatantChart {
 	max-height:600px;
+	max-width:870px;
 	overflow:auto;
 }
 
 .combRow {
+	font-size:.8em;
 	padding:3px;
 	border:1px solid;
 	border-color:#666;
@@ -120,6 +124,23 @@ input[type="text"]:focus, select:focus, input[type="submit"]:focus, input[type="
 	overflow:hidden;
 	padding-left:3px;
 	padding-right:3px;
+}
+
+.combRow {
+	white-space:nowrap;
+}
+.tickCellsBunch div {
+	max-width:36px;
+	width:36px;
+	display:inline-block;
+	overflow:hidden;
+	padding-left:3px;
+	padding-right:3px;
+	border:1px solid #999;
+}
+
+.emptyCell {
+	background-color:#999;
 }
 
 .combatantLeftLink div {
