@@ -47,8 +47,6 @@ cTrack.engagementSVC = function(aEngDAT, aName) {
 		dat.maxSTAM = f.inpMaxSTAM.value;
 		dat.baseDR = f.inpBaseDR.value;
 
-		var newCombDAT = new cTrack.combatantDAT(dat);
-		var newCombSVC = new cTrack.combatantSVC(dat);
 		var origName = dat.name;
 		var safeName = dat.name;
 
@@ -64,8 +62,14 @@ cTrack.engagementSVC = function(aEngDAT, aName) {
 		dat.name = safeName;
 		dat.prevTick = dat.initiative;
 		dat.nextTick = dat.initiative;
+		var newCombDAT = new cTrack.combatantDAT(dat);
+		var newCombSVC = new cTrack.combatantSVC(newCombDAT);
+
+		newCombDAT.prevTick = newCombDAT.initiative;
+		newCombDAT.nextTick = newCombDAT.initiative;
+
 		newCombDAT.name = safeName;
-		this.d.combatants[safeName] = dat;
+		this.d.combatants[safeName] = newCombDAT;
 		this.combatants[safeName] = newCombSVC;
 		this.setStartingInitiative();
 	}

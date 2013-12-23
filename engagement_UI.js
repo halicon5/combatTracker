@@ -3,6 +3,7 @@ cTrack.engagementUI = function(params) {
 
 	this.UI = params.UI; // top level UI
 	this.dispBox = params.targ; // a div style node 
+	this.combatantList = params.combatantList;	// a div style node
 	this.Manager = params.Manager // the top level svc object
 	this.data = params.data;	// current object level data
 	this.svc = params.svc;		// current object level svc
@@ -27,7 +28,9 @@ cTrack.engagementUI = function(params) {
 		this.createTopSummary();
 		this.createMainBox();
 		this.createCombatantChart();
+		this.initializeCombatantList();
 		this.initializeCombatantUIs();
+		this.updateDisplay();
 	}
 
 	cTrack.engagementUI.prototype.initializeCombatantUIs = function() {
@@ -38,6 +41,13 @@ cTrack.engagementUI = function(params) {
 					this.combatants[comb] = new cTrack.combatantUI({UI:this.UI,Manager:this.Manager,svc:sc[comb], data:sc[comb].d, targ:this.elements.combatantChart});
 				}
 			}
+		}
+	}
+
+	cTrack.engagementUI.prototype.initializeCombatantList = function() {
+		if (this.combatantList) {
+			this.UI.clearContextualMenuA();
+			this.updateCombatantListDisplay();
 		}
 	}
 
@@ -88,7 +98,9 @@ cTrack.engagementUI = function(params) {
 		this.initializeCombatantUIs();
 		this.updateTopSummary();
 		this.getNextUpSortOrder();
+		this.getFactionSortOrder();
 		this.updateTickChartDisplay();
+		this.updateCombatantListDisplay();
 	}
 
 	cTrack.engagementUI.prototype.updateTopSummary = function() {
@@ -100,6 +112,25 @@ cTrack.engagementUI = function(params) {
 			this.svc.addCombatantFromForm(this.elements.newCombForm);
 			this.updateDisplay();
 		};
+	}
+
+	cTrack.engagementUI.prototype.getFactionSortOrder = function() {
+		this.combatantsFactionAlpha = [];
+		var increm = 0;
+		for (var comb in this.combatants) {
+			this.combatantsFactionAlpha[increm++] = this.combatants[comb];		
+		}
+		this.combatantsFactionAlpha.sort(function(a,b) {
+			if (a.data && b.data) {
+				if ( (a.data.faction + ' ' + a.data.name) > (b.data.faction + ' ' + b.data.name) ) {
+					return 1;
+				}
+				else {
+					return -1;
+				}
+			}
+			return -1;
+		});
 	}
 
 	cTrack.engagementUI.prototype.getNextUpSortOrder = function() {
@@ -120,6 +151,14 @@ cTrack.engagementUI = function(params) {
 	cTrack.engagementUI.prototype.updateTickChartDisplay = function() {
 		for (var i = 0; i < this.combatantsNextUp.length; i++) {
 			appendChildren(this.elements.combatantChart,this.combatantsNextUp[i].elements.row);
+		}
+	}
+
+	cTrack.engagementUI.prototype.updateCombatantListDisplay = function() {
+		if (this.combatantList && this.combatantList.appendChild) {
+			for (var i = 0; i < this.combatantsFactionAlpha.length; i++) {
+				appendChildren(this.combatantList, this.combatantsFactionAlpha[i].elements.quickRefLink);
+			}
 		}
 	}
 

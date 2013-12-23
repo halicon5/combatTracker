@@ -27,7 +27,7 @@ cTrack.comManUI = function(aComManSVC, aDispBoxId) {
 
 	cTrack.comManUI.prototype.createMainInterfaceTable = function() {
 		var t = createSuperElement("table", ["id",cTrack.cssName+"UITABLE"]);
-		var r = createSuperElement("tr");
+		var r = createSuperElement("tr", ["valign","top"]);
 		var lc = createSuperElement("td", ["id",cTrack.cssName+"LEFTMENU"]);
 		var rc = createSuperElement("td", ["innerHTML","Right Column"], ["id",cTrack.cssName+"MAINCONTENT"]);
 		
@@ -144,7 +144,7 @@ cTrack.comManUI = function(aComManSVC, aDispBoxId) {
 		this.Manager.selectEngagement(engName);
 		this.clearMainContent();
 		this.subUIs.engagement = new cTrack.engagementUI(	{UI: this, targ: this.elements.UIcontent, Manager: this.Manager, 
-													data: this.Manager.currentEngagement.d, svc:this.Manager.currentEngagement}	);
+													data: this.Manager.currentEngagement.d, svc:this.Manager.currentEngagement, combatantList:this.elements.UILeftContextMenuA }	);
 	}
 
 	cTrack.comManUI.prototype.clearMainContent = function() {

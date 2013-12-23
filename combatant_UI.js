@@ -10,6 +10,10 @@ cTrack.combatantUI = function(params) {
 	this.elements = {};
 	this.elements.quickSum = {};
 	this.elements.tickCells = {};
+	this.elements.quickRefLink = createSuperElement("div");
+	this.elements.quickRef = {};
+
+	this.subUIs = {};
 
 	this.jsCLASSNAME = "cTrack.combatantUI";
 
@@ -18,6 +22,19 @@ cTrack.combatantUI = function(params) {
 
 	cTrack.combatantUI.prototype.initialize = function() {
 		this.createCombatantRow();
+		this.createLeftReferenceLink();
+	}
+
+	cTrack.combatantUI.prototype.createLeftReferenceLink = function() {
+		var div = createSuperElement("div", ["class", "combatantLeftLink"] );
+		var fact = createSuperElement("div", ["class", "combLeftFaction"], ["innerHTML",this.data.faction]);
+		var name = createSuperElement("div", ["class", "combLeftName"], ["innerHTML",this.data.name]);
+		var tick = createSuperElement("div", ["class", "combLeftTick"], ["innerHTML",this.data.nextTick]);
+		var stat = createSuperElement("div", ["class", "combLeftStatus"], ["innerHTML",this.data.combatStatus]);
+		this.elements.quickRef.tick = tick;
+		this.elements.quickRef.status = stat;
+		appendChildren(div, fact, name, tick, stat);
+		this.elements.quickRefLink = div;
 	}
 
 	cTrack.combatantUI.prototype.createCombatantRow = function() {
