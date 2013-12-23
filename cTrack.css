@@ -129,6 +129,19 @@ input[type="text"]:focus, select:focus, input[type="submit"]:focus, input[type="
 .combRow {
 	white-space:nowrap;
 }
+
+
+
+
+div.emptyCell {
+	background-color:#999;
+}
+
+div.currentCell {
+	background-color:yellow;
+}
+
+
 .tickCellsBunch div {
 	max-width:36px;
 	width:36px;
@@ -139,9 +152,12 @@ input[type="text"]:focus, select:focus, input[type="submit"]:focus, input[type="
 	border:1px solid #999;
 }
 
-.emptyCell {
-	background-color:#999;
+div.oldcells {
+	display:none;
 }
+
+
+
 
 .combatantLeftLink div {
 	display:inline-block;
@@ -168,61 +184,15 @@ input[type="text"]:focus, select:focus, input[type="submit"]:focus, input[type="
 	max-width:30px;
 }
 
+
+
 .combNameCell {width:100px;max-width:100px;font-weight:bold;}
 .combNextTick {width:24px;max-width:24px;font-weight:bold;}
+
+
+
+
 
 .console {font-family: Monaco;
 		color: green;
 		background-color: black; }
-
-.spellCalcForm{
-	padding: 10px;
-	background-color: #cfc;
-	background: -webkit-gradient(linear, left top, left bottom, from(#aca), to(#cfc)); /* for webkit browsers */
-	background: -moz-linear-gradient(top,  #aca,  #cfc); /* for firefox 3.6+ */
-}
-
-table.spellCalcForm {
-	border-collapse:collapse;
-	border-spacing:0;
-}
-
-table.spellCalcRep {
-	border-collapse:collapse;
-	border-spacing:0;
-}
-
-table.spellCalcForm tr td {
-	padding-left:3px;
-	padding-right:3px;
-	padding-top: 3px;
-	margin:0px;
-	font-size:10pt;
-}
-
-table.spellCalcRep {
-	padding-left:3px;
-	padding-right:3px;
-	padding-top: 3px;
-	margin:0px;
-	font-size:10pt;
-}
-
-.spellCalcRep{
-	padding: 10px;
-	background-color: #cfc;
-	background: -webkit-gradient(linear, left top, left bottom, from(#aca), to(#cfc)); /* for webkit browsers */
-	background: -moz-linear-gradient(top,  #aca,  #cfc); /* for firefox 3.6+ */
-}
-
-.spellCalcHead {
-	font-weight: bold;
-	text-align: right;
-}
-
-.spellCalcRepheader {
-	font-weight: bold;
-	text-align: right;	
-}
-
-

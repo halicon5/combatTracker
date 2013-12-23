@@ -45,6 +45,9 @@ cTrack.engagementSVC = function(aEngDAT, aName) {
 				}
 			}
 		}
+		if (maxTick < this.d.currentTick) {
+			maxTick = this.d.currentTick;
+		}
 		this.d.maxTick = maxTick;
 	}
 
@@ -63,8 +66,11 @@ cTrack.engagementSVC = function(aEngDAT, aName) {
 	}
 
 	cTrack.engagementSVC.prototype.startCombat = function() {
+		if (this.d.status !== 'active') {
+			this.d.currentTick = this.d.startingTick;
+			this.d.status = 'active';
+		}
 		this.updateEngagement();
-		this.d.status = 'active';
 	}
 
 	cTrack.engagementSVC.prototype.addCombatantFromForm = function(f) {
@@ -103,5 +109,10 @@ cTrack.engagementSVC = function(aEngDAT, aName) {
 		newCombDAT.name = safeName;
 		this.d.combatants[safeName] = newCombDAT;
 		this.combatants[safeName] = newCombSVC;
+		this.updateEngagement();
+	}
+
+	cTrack.engagementSVC.prototype.incrementCounter = function() {
+		this.d.currentTick++;
 		this.updateEngagement();
 	}

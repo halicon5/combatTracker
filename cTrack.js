@@ -89,7 +89,11 @@ var cTrack = function(targ, params, userPrefs) {
 	}
 	
 
-
+	cTrack.nodeRemoveSelf = function (node ) {
+		if (node && node.parentNode && node.parentNode.removeChild ) {
+			node.parentNode.removeChild(node);
+		}
+	}
 
 	cTrack.removeDescendents = function(node) {
 		if (node && node.hasChildNodes() ) {
@@ -230,3 +234,58 @@ function createSuperElement () {
 function usefulTypeOf (obj) {
 	return Object.prototype.toString.call(obj);
 }
+
+
+cTrack.updateStyleSheet = function(sheetName,ruleName, detail) {
+	var sheet = undefined;
+	for(var i=0; i<document.styleSheets.length; i++) {
+		var sh = document.styleSheets[i];
+		if(sh.title == sheetName) {
+			sheet = sh;
+			break;
+		}
+	}
+
+	var rule = undefined;
+	if (sheet && sheet.cssRules) {
+		for (var i = 0; i<sheet.cssRules.length; i++) {
+			if (sheet.cssRules[i].selectorText == ruleName) {
+				rule = sheet.cssRules[i];
+				break;
+			}
+		}
+		if (!rule) {
+			return;
+		}
+
+		if (detail) {
+			for (var key in detail) {
+				var stop = detail[key];
+				rule.style.setProperty(key,detail[key]);
+			 stop = detail[key];
+			}
+		}
+
+	} else {
+		return;
+	}
+
+
+}
+
+
+/*
+function changeText() {
+	if(!e3_style_on) {
+		rule_sheet.insertRule("p { color: red;}", 2);
+	}
+	e3_style_on = true;
+	showRules();
+}
+function resetText() {
+	if(e3_style_on) {
+		rule_sheet.deleteRule(2);
+	}
+	e3_style_on = false;
+	showRules();
+}*/

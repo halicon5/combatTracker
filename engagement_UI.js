@@ -18,6 +18,7 @@ cTrack.engagementUI = function(params) {
 	this.combatantsFactionAlpha = []; // sorted list of combatants by faction/name
 	this.combatantsNextUp = []; // sorted list of combatants by upcoming action
 
+	this.showHideTicks = "hide";
 
 	this.jsCLASSNAME = "cTrack.engagementUI";
 
@@ -70,6 +71,7 @@ cTrack.engagementUI = function(params) {
 		var table = createSuperElement("table");
 		var topRow = createSuperElement("tr");
 		var row2nd = createSuperElement("tr");
+		var row3rd = createSuperElement("tr");
 		var engNameLbl = createSuperElement("td", ["innerHTML","Engagement:"]);
 		this.elements.summary.engName = createSuperElement("td", ["innerHTML",this.data.name], ["class","bigSummary"]);
 		var initCountLbl = createSuperElement("td", ["innerHTML","Current Count:"]);
@@ -82,16 +84,31 @@ cTrack.engagementUI = function(params) {
 		this.elements.summary.status = createSuperElement("td", ["innerHTML",this.data.status], ["class","smallSummary"]);
 		this.elements.summary.startBtn = createSuperElement("input", ["type","button"], ["value","start"], ["onclick","this.SCobj.startCombat();"] );
 		this.elements.summary.startBtn.SCobj = this;
-		appendChildren(this.elements.summary.status, this.elements.summary.startBtn);
+	
+		this.elements.summary.nextBtn = createSuperElement("input", ["type","button"], ["value","Next Tick++"], ["onclick","this.SCobj.incrementCounter();"] );
+		this.elements.summary.nextBtn.SCobj = this;
+
+		var correctBtn = (this.data.status === 'active') ? this.elements.summary.nextBtn : this.elements.summary.startBtn;
+
+
+
+		appendChildren(this.elements.summary.status, correctBtn);
 		var startTickLbl = createSuperElement("td", ["innerHTML","Starting Tick:"]);
 		this.elements.summary.startingTick = createSuperElement("td", ["innerHTML",this.data.startingTick], ["class","smallSummary"]);
 
 
+		var showHideCell = createSuperElement("td", ["colspan",3]);
+		this.elements.summary.showHidePrevCellsBtn = createSuperElement("input", ["type","button"], ["value","Show/Hide Prev Ticks"], ["onclick","this.SCobj.showHidePrevTicks();"] );
+		this.elements.summary.showHidePrevCellsBtn.SCobj = this;		
+		appendChildren(showHideCell,this.elements.summary.showHidePrevCellsBtn);
+
+
 		appendChildren(this.dispBox, box);
 		appendChildren(box, table);
-		appendChildren(table,topRow,row2nd);
+		appendChildren(table,topRow,row2nd,row3rd);
 		appendChildren(topRow, engNameLbl, this.elements.summary.engName , initCountLbl, this.elements.summary.currentTick,this.elements.newCombatantCell);
 		appendChildren(row2nd, engStatusLbl, this.elements.summary.status, startTickLbl, this.elements.summary.startingTick);
+		appendChildren(row3rd, showHideCell);
 
 		this.elements.newCombForm = cTrack.combatantUI.createNewCombatantFormENG(this.elements.newCombatantCell, this, "addNewCombatantToEngagement()");
 
@@ -109,8 +126,11 @@ cTrack.engagementUI = function(params) {
 
 	cTrack.engagementUI.prototype.updateTopSummary = function() {
 		this.elements.summary.startingTick.innerHTML = this.data.startingTick;
-//		this.elements.summary.status.innerHTML = this.data.status;
-//		appendChildren(this.elements.summary.status, this.elements.summary.status.startBtn);
+		this.elements.summary.currentTick.innerHTML = this.data.currentTick;
+		if (this.data.status === 'active') {
+			this.elements.summary.status.innerHTML = this.data.status;
+			appendChildren(this.elements.summary.status, this.elements.summary.nextBtn);
+		}
 	}
 
 	cTrack.engagementUI.prototype.addNewCombatantToEngagement = function() {
@@ -173,6 +193,22 @@ cTrack.engagementUI = function(params) {
 		if ( !confirm("Are you sure you want to start? Have you added all starting combatants?") ) {
 			return false;
 		}
+
 		this.svc.startCombat();
 		this.updateDisplay();
+	}
+
+	cTrack.engagementUI.prototype.incrementCounter = function() {
+		this.svc.incrementCounter();
+		this.updateDisplay();
+	}
+
+	cTrack.engagementUI.prototype.showHidePrevTicks = function() {
+		if (this.showHideTicks == 'hide') {
+			this.showHideTicks = 'show';
+			cTrack.updateStyleSheet("cTrack.css","div.oldcells",{"display":"inline-block","background-color":"pink"});
+		} else {
+			this.showHideTicks = 'hide';
+			cTrack.updateStyleSheet("cTrack.css","div.oldcells",{"display":"none","background-color":""});
+		}
 	}

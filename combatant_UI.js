@@ -27,7 +27,32 @@ cTrack.combatantUI = function(params) {
 
 	cTrack.combatantUI.prototype.updateDisplay = function() {
 		this.createMissingTickCells();
+		if (this.svc.engagementSvc.d.status === 'active' ) {
+			this.updateCellClasses();
+		}
 		this.drawTickCells();
+	}
+
+	cTrack.combatantUI.prototype.updateCellClasses = function() {
+		for (var t in this.elements.tickCells) {
+			if (!isNaN(t)) {
+				t = parseInt(t,10);
+			}
+			var age = "";
+			var cellType = "";
+			if (this.data.ticks[t]) {
+				cellType = "tickCell";
+			} else {
+				cellType = "tickCell emptyCell";
+			}
+			if (t < this.svc.engagementSvc.d.currentTick) {
+				age = " oldCells";
+			}
+			if (t == this.svc.engagementSvc.d.currentTick) {
+				age = " currentCell";
+			}
+			this.elements.tickCells[t].className =  (cellType + age);
+		}
 	}
 
 	cTrack.combatantUI.prototype.createLeftReferenceLink = function() {
