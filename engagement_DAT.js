@@ -9,4 +9,6 @@ cTrack.engagementDAT = function(aName, aEngDAT) {
 	this.maxTick = 0;
 	this.combatants = {};
 	this.notes = "";
+	this.combatantsCurrent = [];
+
 }

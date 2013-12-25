@@ -40,8 +40,8 @@ cTrack.engagementSVC = function(aEngDAT, aName) {
 		if (this.d.combatants) {
 			var sc = this.d.combatants;
 			for (var comb in sc) {
-				if (sc[comb].nextTick > maxTick) {
-					maxTick = sc[comb].nextTick;
+				if (sc[comb].maxTick > maxTick) {
+					maxTick = sc[comb].maxTick;
 				}
 			}
 		}
@@ -57,6 +57,7 @@ cTrack.engagementSVC = function(aEngDAT, aName) {
 		if (this.d.status === 'active') {
 			this.updateCombatants();
 		}
+		this.setCurrentTickCombatants();
 	}
 
 	cTrack.engagementSVC.prototype.updateCombatants = function() {
@@ -72,6 +73,20 @@ cTrack.engagementSVC = function(aEngDAT, aName) {
 		}
 		this.updateEngagement();
 	}
+
+	cTrack.engagementSVC.prototype.setCurrentTickCombatants = function() {
+		delete this.d.combatantsCurrent;
+		this.d.combatantsCurrent = new Array();
+		var increm = 0;
+		for (var comb in this.d.combatants) {
+			
+		}
+	}
+
+
+
+
+
 
 	cTrack.engagementSVC.prototype.addCombatantFromForm = function(f) {
 		var dat = {};

@@ -199,7 +199,9 @@ cTrack.engagementUI = function(params) {
 	}
 
 	cTrack.engagementUI.prototype.incrementCounter = function() {
-		this.svc.incrementCounter();
+		if (this.verifyAllCurrentCombatantsHaveResolved()) {
+			this.svc.incrementCounter();
+		}
 		this.updateDisplay();
 	}
 
@@ -211,4 +213,8 @@ cTrack.engagementUI = function(params) {
 			this.showHideTicks = 'hide';
 			cTrack.updateStyleSheet("cTrack.css","div.oldcells",{"display":"none","background-color":""});
 		}
+	}
+
+	cTrack.engagementUI.prototype.verifyAllCurrentCombatantsHaveResolved = function() {
+
 	}

@@ -4,6 +4,7 @@ cTrack.combatantDAT = function( aCDAT ) {
 	this.initiative = (!aCDAT.initiative) ? 0 : aCDAT.initiative;
 	this.prevTick;
 	this.nextTick;
+	this.maxTick;
 	this.HPtype = (!aCDAT.HPtype) ? "S" : trim(aCDAT.HPtype);
 	this.maxHP = (!aCDAT.maxHP) ? 4 : aCDAT.maxHP;
 	this.maxBP = Math.floor(this.maxHP/2);
@@ -27,5 +28,6 @@ cTrack.combatantDAT = function( aCDAT ) {
 	this.defLog = {};
 	this.injuryLog = {};
 	this.ticks = {};
+	this.tickSeq = [];
 
 }

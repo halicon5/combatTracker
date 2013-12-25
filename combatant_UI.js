@@ -12,6 +12,7 @@ cTrack.combatantUI = function(params) {
 	this.elements.tickCells = {};
 	this.elements.quickRefLink = createSuperElement("div");
 	this.elements.quickRef = {};
+	this.elements.detail = {};
 
 	this.subUIs = {};
 
@@ -23,6 +24,7 @@ cTrack.combatantUI = function(params) {
 	cTrack.combatantUI.prototype.initialize = function() {
 		this.createCombatantRow();
 		this.createLeftReferenceLink();
+		this.createCombatantDetail();
 	}
 
 	cTrack.combatantUI.prototype.updateDisplay = function() {
@@ -120,6 +122,10 @@ cTrack.combatantUI = function(params) {
 		for (var i = this.svc.engagementSvc.d.startingTick; i <= this.svc.engagementSvc.d.maxTick; i++) {
 			appendChildren(this.elements.tickCellsBox, this.elements.tickCells[i]);
 		}
+	}
+
+	cTrack.combatantUI.prototype.createCombatantDetail = function() {
+
 	}
 
 	// returns an object with a list of form field inputs.
