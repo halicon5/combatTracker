@@ -101,8 +101,14 @@ cTrack.combatantUI = function(params) {
 	}
 
 	cTrack.combatantUI.prototype.createTickCell = function(tickCount) {
-		var div = createSuperElement("div", ["class","tickCell "], ["innerHTML",tickCount + ' ACT']);
-		this.elements.tickCells[tickCount] = div;
+		var div = createSuperElement("div", ["class","tickCell"]);
+		if (!this.elements.tickCells[tickCount]) {
+			this.elements.tickCells[tickCount] = div;
+		} 
+		if (!this.subUIs.ticks[tickCount] && this.data.ticks[tickCount] && this.svc.ticks[tickCount]) {
+			this.subUIs.ticks[tickCount] = new cTrack.tickUI({UI:this.UI, Manager:this.Manager,data:this.data.ticks[tickCount],svc:this.svc.ticks[tickCount],targ:this.elements.tickCells[tickCount],combatantUI:this});
+			appendChildren(this.elements.tickCells[tickCount],this.subUIs.ticks[tickCount].elements.tickCell);
+		}
 	}
 
 	cTrack.combatantUI.prototype.createEmptyTickCell = function(tickCount) {
@@ -122,9 +128,20 @@ cTrack.combatantUI = function(params) {
 
 
 	cTrack.combatantUI.prototype.updateExistingCells = function() {
+		// remove cells that don't belong, replace with good cells
+
+		THIS IS BROKEN!!!!!!!
+		THIS IS BROKEN!!!!!!!
+		THIS IS BROKEN!!!!!!!
+		THIS IS BROKEN!!!!!!!
+		THIS IS BROKEN!!!!!!!
 		for (var i = 0; i<this.data.tickSeq.length; i++) {
 
 		}
+		THIS IS BROKEN!!!!!!!
+		THIS IS BROKEN!!!!!!!
+		THIS IS BROKEN!!!!!!!
+		THIS IS BROKEN!!!!!!!
 	}
 
 	cTrack.combatantUI.prototype.drawTickCells = function() {

@@ -18,5 +18,12 @@ cTrack.tickUI = function(params) {
 }
 
 	cTrack.tickUI.prototype.initialize = function() {
-		
+		this.createTickCell();
+	}
+
+	cTrack.tickUI.prototype.createTickCell =function() {
+		var div = createSuperElement("div");
+		this.elements.tickCell = div;
+
+		this.elements.tickCell.innerHTML = this.data.tickId;
 	}
