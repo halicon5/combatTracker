@@ -216,5 +216,5 @@ cTrack.engagementUI = function(params) {
 	}
 
 	cTrack.engagementUI.prototype.verifyAllCurrentCombatantsHaveResolved = function() {
-
+		return true;
 	}

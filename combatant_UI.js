@@ -15,6 +15,7 @@ cTrack.combatantUI = function(params) {
 	this.elements.detail = {};
 
 	this.subUIs = {};
+	this.subUIs.ticks = {};
 
 	this.jsCLASSNAME = "cTrack.combatantUI";
 
@@ -29,6 +30,7 @@ cTrack.combatantUI = function(params) {
 
 	cTrack.combatantUI.prototype.updateDisplay = function() {
 		this.createMissingTickCells();
+		this.updateExistingCells();
 		if (this.svc.engagementSvc.d.status === 'active' ) {
 			this.updateCellClasses();
 		}
@@ -115,6 +117,13 @@ cTrack.combatantUI = function(params) {
 			} else if (!this.elements.tickCells[i] ) {
 				this.createEmptyTickCell(i);
 			}
+		}
+	}
+
+
+	cTrack.combatantUI.prototype.updateExistingCells = function() {
+		for (var i = 0; i<this.data.tickSeq.length; i++) {
+
 		}
 	}
 

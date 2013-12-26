@@ -2,6 +2,7 @@ cTrack.combatantSVC = function(aCombatantDAT, aParentEngagement) {
 	this.d = aCombatantDAT;
 
 	this.engagementSvc = aParentEngagement; // a svc object referring to the parent engagment
+	this.ticks = {};
 
 	this.jsCLASSNAME = "cTrack.combatantSVC";
 	this.initialize();
@@ -14,15 +15,22 @@ cTrack.combatantSVC = function(aCombatantDAT, aParentEngagement) {
 
 	cTrack.combatantSVC.prototype.addTick = function(tickDAT) {
 		var dat = new cTrack.tickDAT(tickDAT);
-
+		var svc = new cTrack.tickSVC(dat, this);
 		if (!this.d.ticks[dat.tickId]) {
 			this.d.ticks[tickDAT.tickId] = dat;
+			this.ticks[tickDAT.tickId] = svc;
+
 			this.d.tickSeq.push(this.d.ticks[tickDAT.tickId]);
 			this.d.tickSeq.sort( function( a,b ) {
 				return a.tickId - b.tickId;
 			});
 		}
 		this.update();
+	}
+
+	cTrack.combatantSVC.prototype.removeTick = function(tickId) {
+		// destroy tick id 
+		// delete and rebuild the sorted tick list
 	}
 
 	cTrack.combatantSVC.prototype.addInitialTick = function() {
@@ -32,7 +40,7 @@ cTrack.combatantSVC = function(aCombatantDAT, aParentEngagement) {
 
 	cTrack.combatantSVC.prototype.update = function() {
 		this.setMaxTick();
-//		this.setNextTick();
+		this.setNextTick();
 		if (!this.engagementSvc.d.status === 'active') {
 			return false;
 		}

@@ -149,14 +149,23 @@ div.currentCell {
 	overflow:hidden;
 	padding-left:3px;
 	padding-right:3px;
-	border:1px solid #999;
+	border:2px solid #999;
 }
 
 div.oldcells {
 	display:none;
 }
 
+div.tickCell {
+	border-radius: 5px;
+}
 
+div.tickCell:hover {
+	background-color: green;
+	font-weight: bold;
+	border:2px #000 solid;
+	border-radius: 5px;
+}
 
 
 .combatantLeftLink div {
