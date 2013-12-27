@@ -157,6 +157,7 @@ div.oldcells {
 }
 
 div.tickCell {
+	padding:2px;
 	border-radius: 5px;
 }
 
@@ -193,6 +194,12 @@ div.tickCell:hover {
 	max-width:30px;
 }
 
+div.tickCellUIroot {
+	border:0;
+	border-style:none;
+	padding:0;
+	margin:0;
+}
 
 
 .combNameCell {width:100px;max-width:100px;font-weight:bold;}

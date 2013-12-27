@@ -22,7 +22,7 @@ cTrack.tickUI = function(params) {
 	}
 
 	cTrack.tickUI.prototype.createTickCell =function() {
-		var div = createSuperElement("div");
+		var div = createSuperElement("div", ["class","tickCellUIroot"]);
 		this.elements.tickCell = div;
 
 		this.elements.tickCell.innerHTML = this.data.tickId;

@@ -129,19 +129,20 @@ cTrack.combatantUI = function(params) {
 
 	cTrack.combatantUI.prototype.updateExistingCells = function() {
 		// remove cells that don't belong, replace with good cells
-
-		THIS IS BROKEN!!!!!!!
-		THIS IS BROKEN!!!!!!!
-		THIS IS BROKEN!!!!!!!
-		THIS IS BROKEN!!!!!!!
-		THIS IS BROKEN!!!!!!!
-		for (var i = 0; i<this.data.tickSeq.length; i++) {
-
+		for ( var t in this.subUIs.ticks ) {
+			if (!this.data.ticks[t]) {
+				delete this.subUIs.ticks[t];
+				cTrack.removeDescendents(this.elements.tickCells[t]);
+				this.elements.tickCells[t].setAttribute("class","tickCell emptyCell ");
+			}
 		}
-		THIS IS BROKEN!!!!!!!
-		THIS IS BROKEN!!!!!!!
-		THIS IS BROKEN!!!!!!!
-		THIS IS BROKEN!!!!!!!
+		for (var i = 0; i<this.data.tickSeq.length; i++) {
+			if (!this.subUIs.ticks[this.data.tickSeq[i].tickId]) {
+				cTrack.removeDescendents(this.elements.tickCells[this.data.tickSeq[i].tickId]);
+				this.createTickCell(this.data.tickSeq[i].tickId);
+				this.elements.tickCells[this.data.tickSeq[i].tickId].setAttribute("class","tickCell ");
+			}
+		}
 	}
 
 	cTrack.combatantUI.prototype.drawTickCells = function() {
