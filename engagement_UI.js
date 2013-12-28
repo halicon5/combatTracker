@@ -117,6 +117,7 @@ cTrack.engagementUI = function(params) {
 
 	cTrack.engagementUI.prototype.updateDisplay = function() {
 		this.initializeCombatantUIs();
+		this.svc.updateEngagement();
 		this.updateTopSummary();
 		this.getNextUpSortOrder();
 		this.getFactionSortOrder();

@@ -31,6 +31,20 @@ cTrack.combatantSVC = function(aCombatantDAT, aParentEngagement) {
 	cTrack.combatantSVC.prototype.removeTick = function(tickId) {
 		// destroy tick id 
 		// delete and rebuild the sorted tick list
+		delete this.ticks[tickId];
+		delete this.d.ticks[tickId];
+		this.rebuildTickSeq();
+	}
+
+	cTrack.combatantSVC.prototype.rebuildTickSeq = function() {
+		delete this.d.tickSeq;
+		this.d.tickSeq = new Array();
+		for (var t in this.d.ticks) {
+			this.d.tickSeq.push(this.d.ticks[t]);
+		}
+		this.d.tickSeq.sort( function( a,b ) {
+			return a.tickId - b.tickId;
+		});	
 	}
 
 	cTrack.combatantSVC.prototype.addInitialTick = function() {
@@ -39,6 +53,7 @@ cTrack.combatantSVC = function(aCombatantDAT, aParentEngagement) {
 	}
 
 	cTrack.combatantSVC.prototype.update = function() {
+		this.setInitiative();
 		this.setMaxTick();
 		this.setNextTick();
 		if (!this.engagementSvc.d.status === 'active') {
@@ -46,6 +61,12 @@ cTrack.combatantSVC = function(aCombatantDAT, aParentEngagement) {
 		}
 
 		this.addMissingTicks();
+	}
+
+	cTrack.combatantSVC.prototype.setInitiative = function() {
+		if (this.d.tickSeq[0]) {
+			this.d.initiative = this.d.tickSeq[0].tickId;
+		}
 	}
 
 	cTrack.combatantSVC.prototype.setMaxTick = function() {

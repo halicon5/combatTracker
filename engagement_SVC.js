@@ -52,11 +52,9 @@ cTrack.engagementSVC = function(aEngDAT, aName) {
 	}
 
 	cTrack.engagementSVC.prototype.updateEngagement = function() {
+		this.updateCombatants();
 		this.setStartingInitiative();
 		this.setMaxTick();
-		if (this.d.status === 'active') {
-			this.updateCombatants();
-		}
 		this.setCurrentTickCombatants();
 	}
 

@@ -112,7 +112,7 @@ cTrack.combatantUI = function(params) {
 	}
 
 	cTrack.combatantUI.prototype.createEmptyTickCell = function(tickCount) {
-		var div = createSuperElement("div", ["class","tickCell emptyCell"], ["innerHTML",tickCount]);
+		var div = cTrack.tickUI.createEmptyTickCell(this.data.name, tickCount);
 		this.elements.tickCells[tickCount] = div;
 	}
 
@@ -134,6 +134,7 @@ cTrack.combatantUI = function(params) {
 				delete this.subUIs.ticks[t];
 				cTrack.removeDescendents(this.elements.tickCells[t]);
 				this.elements.tickCells[t].setAttribute("class","tickCell emptyCell ");
+				appendChildren(this.elements.tickCells[t],cTrack.tickUI.createEmptyCellContent(this.data.name,t));
 			}
 		}
 		for (var i = 0; i<this.data.tickSeq.length; i++) {

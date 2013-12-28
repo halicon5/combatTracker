@@ -27,3 +27,14 @@ cTrack.tickUI = function(params) {
 
 		this.elements.tickCell.innerHTML = this.data.tickId;
 	}
+
+	cTrack.tickUI.createEmptyTickCell = function(combatantName, tickId) {
+		var div = createSuperElement("div", ["class","tickCell emptyCell"]);
+		var cont = cTrack.tickUI.createEmptyCellContent(combatantName,tickId);
+		appendChildren(div,cont);
+		return div;
+	}
+
+	cTrack.tickUI.createEmptyCellContent = function(combatantName, tickId) {
+		return createSuperElement('div', ["class","emptyCellContent"], ["innerHTML",tickId]);
+	}
