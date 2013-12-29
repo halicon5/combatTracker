@@ -87,7 +87,10 @@ var cTrack = function(targ, params, userPrefs) {
 			this.log(exception);
 		}
 	}
-	
+
+
+
+
 
 	cTrack.nodeRemoveSelf = function (node ) {
 		if (node && node.parentNode && node.parentNode.removeChild ) {

@@ -9,6 +9,9 @@ cTrack.tickUI = function(params) {
 	this.combatantUI = params.combatantUI;
 
 	this.elements = {};
+	this.elements.div = undefined;
+	this.elements.emptyCellPopUp = undefined;
+	this.elements.editTickPopUp = undefined;
 
 	this.subUIs = {};
 
@@ -25,7 +28,7 @@ cTrack.tickUI = function(params) {
 		var div = createSuperElement("div", ["class","tickCellUIroot"]);
 		this.elements.tickCell = div;
 
-		this.elements.tickCell.innerHTML = this.data.tickId;
+		this.elements.tickCell.innerHTML = this.data.tickId + 'ACT';
 	}
 
 	cTrack.tickUI.createEmptyTickCell = function(combatantName, tickId) {
@@ -37,4 +40,28 @@ cTrack.tickUI = function(params) {
 
 	cTrack.tickUI.createEmptyCellContent = function(combatantName, tickId) {
 		return createSuperElement('div', ["class","emptyCellContent"], ["innerHTML",tickId]);
+	}
+
+
+	cTrack.tickUI.openEmptyTickDialog = function(combatantName, tickId) {
+		if (!this.UI.activePopup) {
+			this.UI.activePopup = this;
+			cTrack.createPopupOverlay();
+			var box = document.createElement("div");
+			box.setAttribute("class", cTrack.CSSname + "emptyTickDialogueBox");
+			this.elements.dialogueBox = box;
+			
+			var close = document.createElement("input");
+			close.setAttribute("type", "button");
+			close.setAttribute("value", "Close Experience Window");
+			close.setAttribute("class", CM.CSSname + "closeButton");
+			close.setAttribute("onclick", "this.CMUI.closeXpDialogue()");
+			close.CMUI = this;
+		
+			box.appendChild(close);
+	
+			this.createSummary();
+			this.createXpForm();
+			this.createXpLogDisplay();
+		}
 	}

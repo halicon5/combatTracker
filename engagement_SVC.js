@@ -126,6 +126,20 @@ cTrack.engagementSVC = function(aEngDAT, aName) {
 	}
 
 	cTrack.engagementSVC.prototype.incrementCounter = function() {
-		this.d.currentTick++;
-		this.updateEngagement();
+		var preCheckResults = this.preCheckCombatants(); 
+
+		if (preCheckResults.passflag) {
+			this.d.currentTick++;
+			this.updateEngagement();
+		}
+	}
+
+	cTrack.engagementSVC.prototype.preCheckCombatants = function() {
+		var results = {};
+		results.passflag = true;
+
+		// critical error if any combatants have any unresolved actions
+		// get alert for number of combatants with undeclared actions
+
+		return results;
 	}

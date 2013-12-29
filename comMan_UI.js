@@ -13,6 +13,8 @@ cTrack.comManUI = function(aComManSVC, aDispBoxId) {
 	this.contextMenuListB = {};
 	this.contextMenuArrayB = [];
 
+	this.activePopup = undefined;
+
 	this.jsCLASSNAME = "cTrack.comManUI";
 
 	this.initialize();
@@ -149,4 +151,28 @@ cTrack.comManUI = function(aComManSVC, aDispBoxId) {
 
 	cTrack.comManUI.prototype.clearMainContent = function() {
 		cTrack.removeDescendents(this.elements.UIcontent);
+	}
+
+
+	cTrack.comManUI.prototype.createPopupOverlay = function () {
+		if ( !document.getElementById(this.CSSname + "popupOverlay") && document.getElementById(this.displayBox) ) {
+			var overlay = document.createElement("div");
+			overlay.setAttribute("class", this.CSSname + "popupOverlay");
+			overlay.setAttribute("id", this.CSSname + "popupOverlay");
+			document.getElementById(this.displayBox).appendChild(overlay);
+		}
+	}
+
+	cTrack.comManUI.prototype.createPopupCloseBtn = function(params) {
+		if (!params.buttonText) {
+			params.buttonText = "Close";
+		}
+	}
+
+	cTrack.comManUI.prototype.removePopupOverlay = function () {
+		if ( document.getElementById(this.CSSname + "popupOverlay") && document.getElementById(this.displayBox) ) {
+			overlay = document.getElementById(this.CSSname + "popupOverlay");
+			cTrack.removeDescendents(overlay);
+			document.getElementById(this.displayBox).removeChild(overlay);
+		}	
 	}
