@@ -18,7 +18,7 @@ var cTrack = function(targ, params, userPrefs) {
 	this.initialize();
 
 }
-	
+
 	cTrack.cssName = "cTrack";
 
 	cTrack.prototype.initialize = function() {

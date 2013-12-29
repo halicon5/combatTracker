@@ -13,7 +13,7 @@ cTrack.comManUI = function(aComManSVC, aDispBoxId) {
 	this.contextMenuListB = {};
 	this.contextMenuArrayB = [];
 
-	this.activePopup = undefined;
+	this.popupOverlay = undefined;
 
 	this.jsCLASSNAME = "cTrack.comManUI";
 
@@ -160,6 +160,7 @@ cTrack.comManUI = function(aComManSVC, aDispBoxId) {
 			overlay.setAttribute("class", this.CSSname + "popupOverlay");
 			overlay.setAttribute("id", this.CSSname + "popupOverlay");
 			document.getElementById(this.displayBox).appendChild(overlay);
+			this.popupOverlay = overlay;
 		}
 	}
 
@@ -174,5 +175,7 @@ cTrack.comManUI = function(aComManSVC, aDispBoxId) {
 			overlay = document.getElementById(this.CSSname + "popupOverlay");
 			cTrack.removeDescendents(overlay);
 			document.getElementById(this.displayBox).removeChild(overlay);
+			delete this.popupOverlay;
+			this.popupOverlay = undefined;
 		}	
 	}

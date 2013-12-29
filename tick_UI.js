@@ -9,6 +9,7 @@ cTrack.tickUI = function(params) {
 	this.combatantUI = params.combatantUI;
 
 	this.elements = {};
+	this.elements.tickCell = undefined;
 	this.elements.div = undefined;
 	this.elements.emptyCellPopUp = undefined;
 	this.elements.editTickPopUp = undefined;
@@ -21,7 +22,11 @@ cTrack.tickUI = function(params) {
 }
 
 	cTrack.tickUI.prototype.initialize = function() {
-		this.createTickCell();
+		if (!this.data) {
+			this.createEmptyTickCell();
+		} else {
+			this.createTickCell();
+		}
 	}
 
 	cTrack.tickUI.prototype.createTickCell =function() {
@@ -31,21 +36,24 @@ cTrack.tickUI = function(params) {
 		this.elements.tickCell.innerHTML = this.data.tickId + 'ACT';
 	}
 
-	cTrack.tickUI.createEmptyTickCell = function(combatantName, tickId) {
+	cTrack.tickUI.prototype.createEmptyTickCell = function(combatantName, tickId) {
 		var div = createSuperElement("div", ["class","tickCell emptyCell"]);
 		var cont = cTrack.tickUI.createEmptyCellContent(combatantName,tickId);
+		cont.SCobj = cTrack.tickUI;
+		cont.setAttribute("onclick","SCobj.openEmptyTickDialog(\"" + combatantName + "\"," + tickId + ");");
 		appendChildren(div,cont);
 		return div;
 	}
 
-	cTrack.tickUI.createEmptyCellContent = function(combatantName, tickId) {
+	cTrack.tickUI.prototype.createEmptyCellContent = function(combatantName, tickId) {
 		return createSuperElement('div', ["class","emptyCellContent"], ["innerHTML",tickId]);
 	}
 
 
-	cTrack.tickUI.openEmptyTickDialog = function(combatantName, tickId) {
-		if (!this.UI.activePopup) {
-			this.UI.activePopup = this;
+	cTrack.tickUI.prototype.openEmptyTickDialog = function(combatantName, tickId) {
+		if (!cTrack.activePopup) {
+
+/*			this.UI.activePopup = this;
 			cTrack.createPopupOverlay();
 			var box = document.createElement("div");
 			box.setAttribute("class", cTrack.CSSname + "emptyTickDialogueBox");
@@ -63,5 +71,6 @@ cTrack.tickUI = function(params) {
 			this.createSummary();
 			this.createXpForm();
 			this.createXpLogDisplay();
+*/
 		}
 	}

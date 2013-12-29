@@ -16,6 +16,7 @@ cTrack.combatantUI = function(params) {
 
 	this.subUIs = {};
 	this.subUIs.ticks = {};
+	this.subUIs.emptyTicks = {};
 
 	this.jsCLASSNAME = "cTrack.combatantUI";
 
@@ -113,7 +114,8 @@ cTrack.combatantUI = function(params) {
 
 	cTrack.combatantUI.prototype.createEmptyTickCell = function(tickCount) {
 		var div = cTrack.tickUI.createEmptyTickCell(this.data.name, tickCount);
-		this.elements.tickCells[tickCount] = div;
+		this.subUIs.emptyTicks[tickCount] = new cTrack.tickUI({UI:this.UI, Manager:this.Manager,targ.this.elements.tickCells[tickCount],combatantUI:this})
+		this.elements.tickCells[tickCount] = this.subUIs.emptyTicks[tickCount].elements.tickCell;
 	}
 
 	cTrack.combatantUI.prototype.createMissingTickCells = function() {
@@ -155,6 +157,11 @@ cTrack.combatantUI = function(params) {
 	cTrack.combatantUI.prototype.createCombatantDetail = function() {
 
 	}
+
+
+
+
+
 
 	// returns an object with a list of form field inputs.
 	cTrack.combatantUI.createNewCombatantFormENG = function(targ, contextUI, contextFunc) {
