@@ -10,7 +10,7 @@ cTrack.tickUI = function(params) {
 	this.combatantUI = params.combatantUI;
 
 	this.elements = {};
-	this.elements.tickCell = undefined;
+	this.elements.tickCellBox = undefined;
 	this.elements.div = undefined;
 	this.elements.emptyCellPopUp = undefined;
 	this.elements.editTickPopUp = undefined;
@@ -32,22 +32,24 @@ cTrack.tickUI = function(params) {
 
 	cTrack.tickUI.prototype.createTickCell =function() {
 		var div = createSuperElement("div", ["class","tickCellUIroot"]);
-		this.elements.tickCell = div;
+		this.elements.tickCellBox = div;
 
-		this.elements.tickCell.innerHTML = this.data.tickId + 'ACT';
+		this.elements.tickCellBox.innerHTML = this.data.tickId + 'ACT';
 	}
 
 	cTrack.tickUI.prototype.createEmptyTickCell = function(combatantName, tickId) {
 		var div = createSuperElement("div", ["class","emptyCell"]);
-		var cont = this.createEmptyCellContent(combatantName,tickId);
-		cont.SCobj = this;
-		cont.setAttribute("onclick","SCobj.openEmptyTickDialog(\"" + combatantName + "\"," + tickId + ");");
+		this.elements.tickCellBox = div;
+		this.createEmptyCellContent();
 		appendChildren(div,cont);
-		return div;
 	}
 
 	cTrack.tickUI.prototype.createEmptyCellContent = function(combatantName, tickId) {
-		return createSuperElement('div', ["class","emptyCellContent"], ["innerHTML",tickId]);
+		var cont = createSuperElement('div', ["class","emptyCellContent"], ["innerHTML",tickId]);
+		this.createEmptyCellContent(combatantName,tickId);
+		cont.SCobj = this;
+		cont.setAttribute("onclick","SCobj.openEmptyTickDialog(\"" + combatantName + "\"," + tickId + ");");
+		appendChildren(this.elements.tickCellBox,cont);
 	}
 
 
