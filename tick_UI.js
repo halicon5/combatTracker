@@ -2,6 +2,7 @@ cTrack.tickUI = function(params) {
 	// aUI, aManager, targ, data, svc
 
 	this.UI = params.UI; // top level UI
+	this.tickId = params.tickId;
 	this.dispBox = params.targ; // a div style node 
 	this.Manager = params.Manager // the top level svc object
 	this.data = params.data;	// current object level data
@@ -37,9 +38,9 @@ cTrack.tickUI = function(params) {
 	}
 
 	cTrack.tickUI.prototype.createEmptyTickCell = function(combatantName, tickId) {
-		var div = createSuperElement("div", ["class","tickCell emptyCell"]);
-		var cont = cTrack.tickUI.createEmptyCellContent(combatantName,tickId);
-		cont.SCobj = cTrack.tickUI;
+		var div = createSuperElement("div", ["class","emptyCell"]);
+		var cont = this.createEmptyCellContent(combatantName,tickId);
+		cont.SCobj = this;
 		cont.setAttribute("onclick","SCobj.openEmptyTickDialog(\"" + combatantName + "\"," + tickId + ");");
 		appendChildren(div,cont);
 		return div;
@@ -50,8 +51,8 @@ cTrack.tickUI = function(params) {
 	}
 
 
-	cTrack.tickUI.prototype.openEmptyTickDialog = function(combatantName, tickId) {
-		if (!cTrack.activePopup) {
+	cTrack.tickUI.prototype.openEmptyTickDialog = function() {
+		if (!this.UI.activePopup) {
 
 /*			this.UI.activePopup = this;
 			cTrack.createPopupOverlay();

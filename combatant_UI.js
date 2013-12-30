@@ -103,23 +103,28 @@ cTrack.combatantUI = function(params) {
 
 	cTrack.combatantUI.prototype.createTickCell = function(tickCount) {
 		var div = createSuperElement("div", ["class","tickCell"]);
+		this.elements.tickCells[i] = div;
+STARTED DOING THIS STUFF RIGHT HERE // STARTED DOING THIS RIGHT HERE
 		if (!this.elements.tickCells[tickCount]) {
 			this.elements.tickCells[tickCount] = div;
 		} 
 		if (!this.subUIs.ticks[tickCount] && this.data.ticks[tickCount] && this.svc.ticks[tickCount]) {
-			this.subUIs.ticks[tickCount] = new cTrack.tickUI({UI:this.UI, Manager:this.Manager,data:this.data.ticks[tickCount],svc:this.svc.ticks[tickCount],targ:this.elements.tickCells[tickCount],combatantUI:this});
+			this.subUIs.ticks[tickCount] = new cTrack.tickUI({UI:this.UI, tickId:tickCount, Manager:this.Manager,data:this.data.ticks[tickCount],svc:this.svc.ticks[tickCount],targ:this.elements.tickCells[tickCount],combatantUI:this});
 			appendChildren(this.elements.tickCells[tickCount],this.subUIs.ticks[tickCount].elements.tickCell);
 		}
 	}
 
 	cTrack.combatantUI.prototype.createEmptyTickCell = function(tickCount) {
 		var div = cTrack.tickUI.createEmptyTickCell(this.data.name, tickCount);
-		this.subUIs.emptyTicks[tickCount] = new cTrack.tickUI({UI:this.UI, Manager:this.Manager,targ.this.elements.tickCells[tickCount],combatantUI:this})
+		this.subUIs.emptyTicks[tickCount] = new cTrack.tickUI({UI:this.UI, tickId:tickCount, Manager:this.Manager,targ.this.elements.tickCells[tickCount],combatantUI:this})
 		this.elements.tickCells[tickCount] = this.subUIs.emptyTicks[tickCount].elements.tickCell;
 	}
 
 	cTrack.combatantUI.prototype.createMissingTickCells = function() {
 		for (var i = this.svc.engagementSvc.d.startingTick; i <= this.svc.engagementSvc.d.maxTick; i++) {
+			if (!this.elements.tickCells[i]) {
+				this.createTickCell(i);
+			}
 			if (this.data.ticks[i] && !this.elements.tickCells[i]) {
 				this.createTickCell(i);
 			} else if (!this.elements.tickCells[i] ) {
