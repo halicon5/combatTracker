@@ -23,57 +23,85 @@ cTrack.tickUI = function(params) {
 }
 
 	cTrack.tickUI.prototype.initialize = function() {
+		cTrack.log("CALL cTrack.tickUI.prototype.initialize = function() [" + this + "]",1);
+
 		if (!this.data) {
 			this.createEmptyTickCell();
 		} else {
 			this.createTickCell();
 		}
+
+		cTrack.log("FINISH cTrack.tickUI.prototype.initialize = function() [" + this + "]",-1);
+	}
+
+	cTrack.tickUI.prototype.toString = function() {
+		if (this.combatantUI) {
+			var str = this.combatantUI.data.name;
+		} else {
+			return "COMBATANT UNDEFINED";
+		}
+
+		if (this.data) {
+			str += " Tick " + this.data.tickId;
+		} else  {
+			str += " Empty " + this.tickId;
+		}
+
+		return str;
 	}
 
 	cTrack.tickUI.prototype.createTickCell =function() {
+		cTrack.log("CALL cTrack.tickUI.prototype.createTickCell = function() [" + this + "]",1);
+
 		var div = createSuperElement("div", ["class","tickCellUIroot"]);
 		this.elements.tickCellBox = div;
 
 		this.elements.tickCellBox.innerHTML = this.data.tickId + 'ACT';
+
+		cTrack.log("FINISH cTrack.tickUI.prototype.createTickCell = function() [" + this + "]",-1);
 	}
 
 	cTrack.tickUI.prototype.createEmptyTickCell = function(combatantName, tickId) {
+		cTrack.log("CALL cTrack.tickUI.prototype.createEmptyTickCell = function() [" + this + "]",1);
+
 		var div = createSuperElement("div", ["class","emptyCell"]);
 		this.elements.tickCellBox = div;
 		this.createEmptyCellContent();
-		appendChildren(div,cont);
+//		appendChildren(div,cont);
+
+		cTrack.log("FINISH cTrack.tickUI.prototype.createEmptyTickCell = function() [" + this + "]",-1);
 	}
 
 	cTrack.tickUI.prototype.createEmptyCellContent = function(combatantName, tickId) {
-		var cont = createSuperElement('div', ["class","emptyCellContent"], ["innerHTML",tickId]);
-		this.createEmptyCellContent(combatantName,tickId);
+		cTrack.log("CALL cTrack.tickUI.prototype.createEmptyCellContent = function() [" + this + "]",1);
+
+		var cont = createSuperElement('div', ["class","emptyCellContent"], ["innerHTML",this.tickId]);
 		cont.SCobj = this;
-		cont.setAttribute("onclick","SCobj.openEmptyTickDialog(\"" + combatantName + "\"," + tickId + ");");
+		cont.setAttribute("onclick","SCobj.openEmptyTickDialog(\"" + this.combatantUI.data.name + "\"," + this.tickId + ");");
 		appendChildren(this.elements.tickCellBox,cont);
+
+		cTrack.log("FINISH cTrack.tickUI.prototype.createEmptyCellContent = function() [" + this + "]",-1);
 	}
 
 
 	cTrack.tickUI.prototype.openEmptyTickDialog = function() {
 		if (!this.UI.activePopup) {
 
-/*			this.UI.activePopup = this;
-			cTrack.createPopupOverlay();
 			var box = document.createElement("div");
-			box.setAttribute("class", cTrack.CSSname + "emptyTickDialogueBox");
 			this.elements.dialogueBox = box;
-			
-			var close = document.createElement("input");
+			this.UI.createPopupOverlay(this.elements.dialogueBox);
+			box.setAttribute("class", "DialogueBox emptyTickDialogueBox");
+			var close = this.UI.createPopupCloseBtn({buttonText:"Close Window"});
+
+			/*.createElement("input");
 			close.setAttribute("type", "button");
 			close.setAttribute("value", "Close Experience Window");
 			close.setAttribute("class", CM.CSSname + "closeButton");
 			close.setAttribute("onclick", "this.CMUI.closeXpDialogue()");
 			close.CMUI = this;
-		
+			*/
+
 			box.appendChild(close);
-	
-			this.createSummary();
-			this.createXpForm();
-			this.createXpLogDisplay();
-*/
+			appendChildren(this.UI.dispbox,box);
 		}
 	}

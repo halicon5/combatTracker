@@ -24,21 +24,40 @@ cTrack.combatantUI = function(params) {
 }
 
 	cTrack.combatantUI.prototype.initialize = function() {
+		cTrack.log("CALL cTrack.combatantUI.prototype.initialize = function() [" + this + "]",1);
+
 		this.createCombatantRow();
 		this.createLeftReferenceLink();
 		this.createCombatantDetail();
+
+		cTrack.log("FINISH cTrack.combatantUI.prototype.initialize = function() [" + this + "]",-1);
+	}
+
+	cTrack.combatantUI.prototype.toString = function () {
+		if (this.data) {
+			var str = this.data.name;
+			return str;
+		} else  {
+			return "COMBATANT UNDEFINED";
+		}
 	}
 
 	cTrack.combatantUI.prototype.updateDisplay = function() {
+		cTrack.log("CALL cTrack.combatantUI.prototype.updateDisplay = function() [" + this + "]",1);
+
 		this.createMissingTickCells();
 		this.updateExistingCells();
 		if (this.svc.engagementSvc.d.status === 'active' ) {
 			this.updateCellClasses();
 		}
 		this.drawTickCells();
+
+		cTrack.log("FINISH cTrack.combatantUI.prototype.updateDisplay = function() [" + this + "]",-1);
 	}
 
 	cTrack.combatantUI.prototype.updateCellClasses = function() {
+		cTrack.log("CALL cTrack.combatantUI.prototype.updateCellClasses = function() [" + this + "]",1);
+
 		for (var t in this.elements.tickCells) {
 			if (!isNaN(t)) {
 				t = parseInt(t,10);
@@ -58,9 +77,13 @@ cTrack.combatantUI = function(params) {
 			}
 			this.elements.tickCells[t].className =  (cellType + age);
 		}
+
+		cTrack.log("FINISH cTrack.combatantUI.prototype.updateCellClasses = function() [" + this + "]",-1);
 	}
 
 	cTrack.combatantUI.prototype.createLeftReferenceLink = function() {
+		cTrack.log("CALL cTrack.combatantUI.prototype.createLeftReferenceLink = function() [" + this + "]",1);
+
 		var div = createSuperElement("div", ["class", "combatantLeftLink"] );
 		var fact = createSuperElement("div", ["class", "combLeftFaction"], ["innerHTML",this.data.faction]);
 		var name = createSuperElement("div", ["class", "combLeftName"], ["innerHTML",this.data.name]);
@@ -70,9 +93,13 @@ cTrack.combatantUI = function(params) {
 		this.elements.quickRef.status = stat;
 		appendChildren(div, fact, name, tick, stat);
 		this.elements.quickRefLink = div;
+
+		cTrack.log("FINISH cTrack.combatantUI.prototype.createLeftReferenceLink = function() [" + this + "]",-1);
 	}
 
 	cTrack.combatantUI.prototype.createCombatantRow = function() {
+		cTrack.log("CALL cTrack.combatantUI.prototype.createCombatantRow = function() [" + this + "]",1);
+
 		var row = createSuperElement("div",["class","combRow"]);
 		var name = this.createNameCol();
 		var quickSum = this.createQuickSummary();
@@ -81,60 +108,101 @@ cTrack.combatantUI = function(params) {
 		this.elements.name = name;
 		appendChildren(row, name, quickSum, tickCells);
 		appendChildren(this.dispBox, row);
+
+		cTrack.log("FINISH cTrack.combatantUI.prototype.createCombatantRow = function() [" + this + "]",-1);
 	}
 
 	cTrack.combatantUI.prototype.createNameCol = function() {
+		cTrack.log("CALL cTrack.combatantUI.prototype.createNameCol = function() [" + this + "]");
+
 		return createSuperElement("div",["class","combNameCell"], ["innerHTML",this.data.name]);
 	}
 
 	cTrack.combatantUI.prototype.createQuickSummary = function() {
+		cTrack.log("CALL cTrack.combatantUI.prototype.createQuickSummary = function() [" + this + "]",1);
+
 		var quickSum = createSuperElement("div", ["class","combQuickSum"]);
 		var nextTick = createSuperElement("div", ["class","combNextTick"], ["innerHTML",this.data.nextTick]);
 		this.elements.quickSum.nextTick = nextTick;
 		appendChildren(quickSum,nextTick);
+
+		cTrack.log("FINISH cTrack.combatantUI.prototype.createQuickSummary = function() [" + this + "]",-1);
 		return quickSum;
 	}
 
 	cTrack.combatantUI.prototype.createTickCellsContainer = function() {
+		cTrack.log("CALL cTrack.combatantUI.prototype.createTickCellsContainer = function() [" + this + "]",1);
+
 		var tickCellsBox = createSuperElement("div", ["class","tickCellsBunch"]);
 		this.elements.tickCellsBox = tickCellsBox;
+
+		cTrack.log("FINISH cTrack.combatantUI.prototype.createTickCellsContainer = function() [" + this + "]",-1);
 		return tickCellsBox;
 	}
 
 	cTrack.combatantUI.prototype.createTickCell = function(tickCount) {
+		cTrack.log("CALL cTrack.combatantUI.prototype.createTickCell = function() [" + this + " " + tickCount + "]",1);
+
 		if (!this.elements.tickCells[tickCount]) {
 			var div = createSuperElement("div", ["class","tickCell "]);
 			this.elements.tickCells[tickCount] = div;
 		} 
+
+		cTrack.log("FINISH cTrack.combatantUI.prototype.createTickCell = function() [" + this + " " + tickCount + "]",-1);
 	}
 
 	cTrack.combatantUI.prototype.createTickCellUI = function(tickCount) {
 		// tickDAT is optional
+		cTrack.log("CALL cTrack.combatantUI.prototype.createTickCellUI = function() [" + this + " " + tickCount + "]",1);
+
 		if (!this.subUIs.ticks[tickCount] && this.data.ticks[tickCount] && this.svc.ticks[tickCount]) {
 			this.subUIs.ticks[tickCount] = new cTrack.tickUI({UI:this.UI, tickId:tickCount, Manager:this.Manager,data:this.data.ticks[tickCount],svc:this.svc.ticks[tickCount],targ:this.elements.tickCells[tickCount],combatantUI:this});
-			appendChildren(this.elements.tickCells[tickCount],this.subUIs.ticks[tickCount].elements.tickCell);
+//			appendChildren(this.elements.tickCells[tickCount],this.subUIs.ticks[tickCount].elements.tickCell);
 		}
+
+		cTrack.log("FINISH cTrack.combatantUI.prototype.createTickCellUI = function() [" + this + " " + tickCount + "]",-1);
 	}
 
 	cTrack.combatantUI.prototype.createEmptyTickCellUI = function(tickCount) {
-		this.subUIs.emptyTicks[tickCount] = new cTrack.tickUI({UI:this.UI, tickId:tickCount, Manager:this.Manager, targ:this.elements.tickCells[tickCount],combatantUI:this});
-		this.elements.tickCells[tickCount] = this.subUIs.emptyTicks[tickCount].elements.tickCell;
+		cTrack.log("CALL cTrack.combatantUI.prototype.createEmptyTickCellUI = function() [" + this + " " + tickCount + "]",1);
+
+		if (!this.subUIs.emptyTicks[tickCount] && !this.data.ticks[tickCount] ) {
+			this.subUIs.emptyTicks[tickCount] = new cTrack.tickUI({UI:this.UI, tickId:tickCount, Manager:this.Manager, targ:this.elements.tickCells[tickCount],combatantUI:this});
+		}
+//		this.elements.tickCells[tickCount] = this.subUIs.emptyTicks[tickCount].elements.tickCell;
+
+		cTrack.log("FINISH cTrack.combatantUI.prototype.createEmptyTickCellUI = function() [" + this + " " + tickCount + "]",-1);
 	}
 
 	cTrack.combatantUI.prototype.createMissingTickCells = function() {
+		cTrack.log("CALL cTrack.combatantUI.prototype.createMissingTickCells = function() [" + this + "]",1);
+
 		for (var i = this.svc.engagementSvc.d.startingTick; i <= this.svc.engagementSvc.d.maxTick; i++) {
 			this.createTickCell(i);
-			if (this.data.ticks[i] && !this.elements.tickCells[i]) {
+			if (this.data.ticks[i] && !this.subUIs.ticks[i]) {
 				this.createTickCellUI(i);
-			} else if (!this.elements.tickCells[i] ) {
+			} else if (!this.data.ticks[i] && !this.subUIs.emptyTicks[i] ) {
 				this.createEmptyTickCellUI(i);
 			}
 		}
+
+		cTrack.log("FINISH cTrack.combatantUI.prototype.createMissingTickCells = function() [" + this + "]",-1);
 	}
 
 
 	cTrack.combatantUI.prototype.updateExistingCells = function() {
 		// remove cells that don't belong, replace with good cells
+		cTrack.log("CALL cTrack.combatantUI.prototype.updateExistingCells = function() [" + this + "]",1);
+
+		for (var t in this.subUIs.ticks ) {
+			cTrack.removeDescendents(this.elements.tickCells[t],1);
+			appendChildren(this.elements.tickCells[t],this.subUIs.ticks[t].elements.tickCellBox);
+		}
+		for (var t in this.subUIs.emptyTicks ) {
+			cTrack.removeDescendents(this.elements.tickCells[t],1);
+			appendChildren(this.elements.tickCells[t],this.subUIs.emptyTicks[t].elements.tickCellBox);			
+		}
+/*
 		for ( var t in this.subUIs.ticks ) {
 			if (!this.data.ticks[t]) {
 				delete this.subUIs.ticks[t];
@@ -150,12 +218,19 @@ cTrack.combatantUI = function(params) {
 				this.elements.tickCells[this.data.tickSeq[i].tickId].setAttribute("class","tickCell ");
 			}
 		}
+*/
+		cTrack.log("FINISH cTrack.combatantUI.prototype.updateExistingCells = function() [" + this + "]",-1);
 	}
 
 	cTrack.combatantUI.prototype.drawTickCells = function() {
+		// redraw cells every time in case things get out of sync or extra cells are added at the front
+		cTrack.log("CALL cTrack.combatantUI.prototype.drawTickCells = function() [" + this + "]",1);
+
 		for (var i = this.svc.engagementSvc.d.startingTick; i <= this.svc.engagementSvc.d.maxTick; i++) {
 			appendChildren(this.elements.tickCellsBox, this.elements.tickCells[i]);
 		}
+
+		cTrack.log("CALL cTrack.combatantUI.prototype.drawTickCells = function() [" + this + "]",-1);
 	}
 
 	cTrack.combatantUI.prototype.createCombatantDetail = function() {

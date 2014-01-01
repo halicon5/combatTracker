@@ -13,7 +13,10 @@ cTrack.comManUI = function(aComManSVC, aDispBoxId) {
 	this.contextMenuListB = {};
 	this.contextMenuArrayB = [];
 
-	this.popupOverlay = undefined;
+	this.activePopupMask = undefined;
+	this.activePopup = undefined;
+	this.activePopupCloseBtn = undefined;
+
 
 	this.jsCLASSNAME = "cTrack.comManUI";
 
@@ -22,9 +25,13 @@ cTrack.comManUI = function(aComManSVC, aDispBoxId) {
 
 	cTrack.comManUI.prototype.initialize = function() {
 		// Store core UI structure in a two column table
+		cTrack.log("CALL cTrack.comManUI.prototype.initialize = function()",1);
+
 		this.createMainInterfaceTable();
 		this.createTopLeftMenu();
 		this.createContextualLeftMenuNodes();
+
+		cTrack.log("FINISH cTrack.comManUI.prototype.initialize = function()",-1);
 	}
 
 	cTrack.comManUI.prototype.createMainInterfaceTable = function() {
@@ -154,28 +161,64 @@ cTrack.comManUI = function(aComManSVC, aDispBoxId) {
 	}
 
 
-	cTrack.comManUI.prototype.createPopupOverlay = function () {
-		if ( !document.getElementById(this.CSSname + "popupOverlay") && document.getElementById(this.displayBox) ) {
+
+
+
+	cTrack.comManUI.prototype.createPopupOverlay = function (contentBox,params) {
+		cTrack.log("CALL cTrack.comManUI.prototype.createPopupOverlay = function()",1);
+
+		if ( !this.activePopup ) {
+			this.activePopup = contentBox;
 			var overlay = document.createElement("div");
-			overlay.setAttribute("class", this.CSSname + "popupOverlay");
-			overlay.setAttribute("id", this.CSSname + "popupOverlay");
-			document.getElementById(this.displayBox).appendChild(overlay);
-			this.popupOverlay = overlay;
+			this.activePopupMask = overlay;
+			overlay.setAttribute("class", cTrack.cssName + "popupOverlay");
+			overlay.setAttribute("id", cTrack.cssName + "popupOverlay");
+			appendChildren(this.dispbox, overlay);
 		}
+
+		cTrack.log("FINISH cTrack.comManUI.prototype.createPopupOverlay = function()",-1);
 	}
 
-	cTrack.comManUI.prototype.createPopupCloseBtn = function(params) {
+	cTrack.comManUI.prototype.createPopupCloseBtn = function( params) {
+		/*
+		params.buttonText
+		params.context 		an object the button can refer to
+		params.callback		callback function to be performed before closing, if given a context, uses context[callback]();
+							callback must return true to complete the close
+		*/
+		if (!params) {
+			params = {};
+		}
 		if (!params.buttonText) {
 			params.buttonText = "Close";
 		}
+		var btn = createSuperElement("input", ["type","button"], ["value",params.buttonText] );
+		btn.btnParams = params;
+		btn.SCobj = this;
+		if (params.context && params.context[callback] ) {
+			btn.setAttribute ("onclick", "if (this.btnParams.context[this.btnParams.callback]() ) { this.SCobj.removePopupOverlay(); }");
+		} else if (params.callback) {
+			btn.setAttribute ("onclick", "if (this.btnParams.callback() ) { this.SCobj.removePopupOverlay(); }");
+		} else {
+			btn.setAttribute ("onclick", "this.SCobj.removePopupOverlay();");
+		}
+		this.activePopupCloseBtn = btn;
+		return this.activePopupCloseBtn;
 	}
 
 	cTrack.comManUI.prototype.removePopupOverlay = function () {
-		if ( document.getElementById(this.CSSname + "popupOverlay") && document.getElementById(this.displayBox) ) {
-			overlay = document.getElementById(this.CSSname + "popupOverlay");
-			cTrack.removeDescendents(overlay);
-			document.getElementById(this.displayBox).removeChild(overlay);
-			delete this.popupOverlay;
-			this.popupOverlay = undefined;
+		cTrack.log("CALL cTrack.comManUI.prototype.removePopupOverlay = function()",1);
+
+		if ( this.activePopup && this.activePopupMask) {
+			cTrack.nodeRemoveSelf(this.activePopup);
+			cTrack.nodeRemoveSelf(this.activePopupMask);
+			delete this.activePopup;
+			delete this.activePopupMask;
+			delete this.activePopupCloseBtn;
+			this.activePopup = undefined;
+			this.activePopupMask = undefined;
+			this.activePopupCloseBtn = undefined;
 		}	
+
+		cTrack.log("FINISH cTrack.comManUI.prototype.removePopupOverlay = function()",-1);
 	}

@@ -1,18 +1,11 @@
-var debugBox = document.getElementById("debug_feedback");
-
-var debugLog = new logger();
-
-function updateDebugBox() {
-	debugBox.innerHTML = debugLog.traceLog;
-}
-
+/*
 var Manager = {};
 Manager.devStack = new Array();
 
 var objCounter = 0;
-
-var sCalcUserData = new sCalcPrefs("kantiaSpellCalc");
-
+*/
+//var sCalcUserData = new sCalcPrefs("kantiaSpellCalc");
+/*
 Manager.eval = function(cmd) {
 	debugLog.log(cmd);
 	try {
@@ -22,9 +15,15 @@ Manager.eval = function(cmd) {
 		debugLog.log(exception);
 	}
 }
+*/
 
-var cTracker = new cTrack("combatTrackerDisplay");
+cTrackerDat = new cTrack.comManDAT("v0.1");
+cTracker = new cTrack.comManSVC(cTrackerDat,"combatTrackerDisplay");
 
+var debugDispBox = document.getElementById("debug_feedback");
+var debugRefresh = 1000;
+
+cTrack.logger = new logger(debugDispBox,debugRefresh);
 
 
 /*

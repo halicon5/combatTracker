@@ -1,38 +1,14 @@
-var cTrack = function(targ, params, userPrefs) {
-	if (!params) {
-		var params = {};
-	}
-	this.displayBoxId = targ;
-	this.cTrackId = params.cTrackId;
-	this.elems = {};
-	this.mandat = new cTrack.comManDAT("v0.1");
-	this.Manager = new cTrack.comManSVC(this.mandat,this.displayBoxId);
-	this.UI = this.Manager.UI;
-
-	if ( userPrefs && userPrefs.saveData) {
-		this.userPrefs = userPrefs;
-	} else {
-//		this.userPrefs = new cTrackPrefs("combatTrackerDefault");
-	}
-	this.logger = logger;
-	this.initialize();
-
+var cTrack =  {
+	"cTrackVersion": "v0.1",
+	"cssName":"cTrack"
 }
 
-	cTrack.cssName = "cTrack";
-
-	cTrack.prototype.initialize = function() {
-		this.log("CALL cTrack.prototype.initialize = function()");
-
-		this.log("FINISH cTrack.prototype.initialize = function()");
-	}
 
 
-
-
+/*
 
 	cTrack.prototype.updateUserPrefs = function(inpObj, inpDef) {
-		this.log ("CALL cTrack.prototype.updateUserPrefs = function(inpObj, inpDef)");
+		cTrack.log ("CALL cTrack.prototype.updateUserPrefs = function(inpObj, inpDef)");
 
 		if (inpDef.map) {
 			if (inpDef.map.substring(0,6) === "global" ) {
@@ -46,14 +22,14 @@ var cTrack = function(targ, params, userPrefs) {
 			this.userPrefs.saveData();
 		}
 
-		this.log("FINISH cTrack.prototype.updateUserPrefs = function(inpObj, inpDef)");
+		cTrack.log("FINISH cTrack.prototype.updateUserPrefs = function(inpObj, inpDef)");
 	}
 
 
 
 
 	cTrack.prototype.setUserDefault = function(inpObj) {
-		this.log("CALL cTrack.prototype.setUserDefault = function(cellDef)");
+		cTrack.log("CALL cTrack.prototype.setUserDefault = function(cellDef)");
 
 		if (inpObj.inpDef && inpObj.inpDef.map) {
 			if ( this.userPrefs.spellKeys["globalVar"][inpObj.inpDef.map] ) {
@@ -64,21 +40,21 @@ var cTrack = function(targ, params, userPrefs) {
 				this.v[inpObj.inpDef.map] = this.userPrefs.spellKeys[this.cTrackId][inpObj.inpDef.map];
 			}
 		}
-		this.log("FINISH cTrack.prototype.setUserDefault = function(cellDef)");
+		cTrack.log("FINISH cTrack.prototype.setUserDefault = function(cellDef)");
 	}
+*/
 
-
-	cTrack.prototype.log = function(msg) {
+	cTrack.log = function(msg,indent) {
 		if (this.logger && this.logger.log) {
-			this.logger.log(msg);
+			this.logger.log(msg,indent);
 		}
 	}
 
-	cTrack.prototype.clearLog = function() {
+	cTrack.clearLog = function() {
 		this.traceLog = "";
 	}
 	
-	cTrack.prototype.eval = function(cmd) {
+	cTrack.eval = function(cmd) {
 		this.log(cmd);
 		try {
 			eval(cmd);
@@ -98,10 +74,14 @@ var cTrack = function(targ, params, userPrefs) {
 		}
 	}
 
-	cTrack.removeDescendents = function(node) {
-		if (node && node.hasChildNodes() ) {
+	cTrack.removeDescendents = function(node, levels) {
+		if (node && node.hasChildNodes() && (levels === undefined || levels > 0) ) {
 			while ( node.hasChildNodes() ) {
-				cTrack.removeDescendents(node.firstChild);
+				if (levels === undefined) {
+					cTrack.removeDescendents(node.firstChild);
+				} else {
+					cTrack.removeDescendents(node.firstChild, (levels - 1) );
+				}
 				node.removeChild(node.firstChild);
 			}
 		}
@@ -116,7 +96,7 @@ var cTrack = function(targ, params, userPrefs) {
 	/*
 	Service cleanup functions
 	*/
-	cTrack.prototype.destroy = function() {
+	cTrack.destroy = function() {
 		if (cTrack.debug) cTrack.log("[DESTROY]" + this.jsCLASSNAME + " " + this.jsOBJNAME);
 		this.destroyFlag = 1;
 		for (var svc in this) {
@@ -127,13 +107,13 @@ var cTrack = function(targ, params, userPrefs) {
 		}	
 	}
 
-	cTrack.prototype.extend = function(child, parent) {
+	cTrack.extend = function(child, parent) {
 		var f = function() {};
 		f.prototype = parent.prototype
 		child.prototype = new f();
 	}
 
-	cTrack.prototype.shallowMerge = function(p, c) {
+	cTrack.shallowMerge = function(p, c) {
 		if (typeof c === "object") {
 			for (var i in p) {
 				if (typeof p[i] !== "object") {
@@ -143,7 +123,7 @@ var cTrack = function(targ, params, userPrefs) {
 		}
 	}
 
-	cTrack.prototype.deepCopy = function(p, c) {
+	cTrack.deepCopy = function(p, c) {
 		var c = c || {};
 		for (var i in p) {
 			if (p[i] === null) {
