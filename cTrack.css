@@ -1,6 +1,7 @@
 /* RESET CSS */
 
 /* remember to highlight inserts somehow! */
+html { font-size: 16px;}
 ins {
 	text-decoration: none;
 }
@@ -11,7 +12,7 @@ del {
 input, input[type="text"], input[type="submit"], input[type="submit"]:focus, input[type="button"], input[type="button"]:focus {
 	-moz-border-radius: 8px;
 	-webkit-border-radius: 8px;	
-	font-size: 9px;
+	font-size:.8rem;
 }
 
 select::-moz-focus-inner, input[type="submit"]::-moz-focus-inner, input[type="button"]::-moz-focus-inner
@@ -99,6 +100,7 @@ input[type="text"]:focus, select:focus, input[type="submit"]:focus, input[type="
 	padding: 5px;
 	color: #fff;
 	font-weight:bold;
+	font-size:.9em;
 	background: -webkit-gradient(linear, left top, left bottom, from(#020), to(#242)); /* for webkit browsers */
 	background: -moz-linear-gradient(top,  #020,  #242);
 	border-radius:8pt;
@@ -112,7 +114,7 @@ input[type="text"]:focus, select:focus, input[type="submit"]:focus, input[type="
 }
 
 .combRow {
-	font-size:.8em;
+	font-size:.8rem;
 	padding:3px;
 	border:1px solid;
 	border-color:#666;
@@ -143,13 +145,15 @@ div.currentCell {
 
 
 .tickCellsBunch div {
-	max-width:36px;
-	width:36px;
+	margin:1px;
+	max-width: 60px;
+	width:60px;
 	display:inline-block;
 	overflow:hidden;
 	padding-left:3px;
 	padding-right:3px;
 	border:2px solid #999;
+	font-size:.8rem;
 }
 
 div.oldcells {
@@ -157,8 +161,10 @@ div.oldcells {
 }
 
 div.tickCell {
-	padding:2px;
-	border-radius: 5px;
+}
+
+table.tickGrid {
+	font-size:.8rem;
 }
 
 div.tickCell:hover {
@@ -168,13 +174,31 @@ div.tickCell:hover {
 	border-radius: 5px;
 }
 
+div.tickCellUIroot {
+	border:0;
+	border-style:none;
+	padding:0;
+	margin:0;
+}
+
+div.tickCellContent, div.emptyCellContent {
+	padding:0px;
+	margin:0px;
+	border:0px none;
+}
+
+.tickStatus {
+	text-decoration: underline;
+}
+
+
 
 .combatantLeftLink div {
 	display:inline-block;
 	overflow:hidden;
 	padding-left:3px;
 	padding-right:3px;	
-	font-size:.8em;
+	font-size:.8rem;
 }
 
 .combLeftFaction {
@@ -194,12 +218,7 @@ div.tickCell:hover {
 	max-width:30px;
 }
 
-div.tickCellUIroot {
-	border:0;
-	border-style:none;
-	padding:0;
-	margin:0;
-}
+
 
 
 .combNameCell {width:100px;max-width:100px;font-weight:bold;}

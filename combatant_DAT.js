@@ -21,6 +21,7 @@ cTrack.combatantDAT = function( aCDAT ) {
 	this.combatStatus = "Open";
 	this.notes = "";
 
+	this.actSeries = 0;
 	this.offSeries = 0;
 	this.defSeries = 0;
 
