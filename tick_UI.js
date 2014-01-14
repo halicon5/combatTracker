@@ -111,6 +111,7 @@ cTrack.tickUI = function(params) {
 
 
 	cTrack.tickUI.prototype.openEmptyTickDialog = function() {
+		cTrack.log("CALL cTrack.tickUI.prototype.openEmptyTickDialog = function() [" + this + "]",1);
 		if (!this.UI.activePopup) {
 
 			var box = document.createElement("div");
@@ -130,26 +131,49 @@ cTrack.tickUI = function(params) {
 			box.appendChild(close);
 			appendChildren(this.UI.dispbox,box);
 		}
+		cTrack.log("FINISH cTrack.tickUI.prototype.openEmptyTickDialog = function() [" + this + "]",-1);
 	}
 
 	cTrack.tickUI.prototype.openExistingTickDialog = function() {
+		cTrack.log("CALL cTrack.tickUI.prototype.openExistingTickDialog = function() [" + this + "]",1);
 		if (!this.UI.activePopup) {
 
 			var box = document.createElement("div");
 			this.elements.dialogueBox = box;
 			this.UI.createPopupOverlay(this.elements.dialogueBox);
-			box.setAttribute("class", "DialogueBox emptyTickDialogueBox");
+			box.setAttribute("class", "DialogueBox existingTickDialogueBox");
 			var close = this.UI.createPopupCloseBtn({buttonText:"Close Window"});
 
-			/*.createElement("input");
-			close.setAttribute("type", "button");
-			close.setAttribute("value", "Close Experience Window");
-			close.setAttribute("class", CM.CSSname + "closeButton");
-			close.setAttribute("onclick", "this.CMUI.closeXpDialogue()");
-			close.CMUI = this;
-			*/
+			var table = createSuperElement("table");
+			var r = createSuperElement("tr", ["valign","top"]);
+			appendChildren(table, r);
+			appendChildren(box,table);
+
+			var r1c1 = createSuperElement("td");
+			var r1c2 = createSuperElement("td");
+
+			appendChildren(r,r1c1,r1c2);
+
+			this.thisTickDialogForm(r1c1);
+			this.nextTickDialogForm(r1c2);
 
 			box.appendChild(close);
 			appendChildren(this.UI.dispbox,box);
 		}	
+		cTrack.log("FINISH cTrack.tickUI.prototype.openExistingTickDialog = function() [" + this + "]",-1);
+	}
+
+
+	cTrack.tickUI.prototype.thisTickDialogForm = function(targ) {
+		cTrack.log("CALL cTrack.tickUI.prototype.thisTickDialogForm = function() [" + this + "]",1);
+		var head = createSuperElement("h3", ["innerHTML", "Tick " + this.data.tickId]);
+		appendChildren(targ,head);
+		cTrack.log("FINISH cTrack.tickUI.prototype.thisTickDialogForm = function() [" + this + "]",-1);
+	}
+
+	cTrack.tickUI.prototype.nextTickDialogForm = function(targ) {
+		cTrack.log("CALL cTrack.tickUI.prototype.nextTickDialogForm = function() [" + this + "]",1);
+		var head = createSuperElement("h3", ["innerHTML", "Next Tick - Changes will delete all future ticks for this combatant!"]);
+		appendChildren(targ,head);
+		cTrack.log("FINISH cTrack.tickUI.prototype.nextTickDialogForm = function() [" + this + "]",-1);
 	}

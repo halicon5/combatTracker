@@ -10,8 +10,7 @@ del {
 }
 
 input, input[type="text"], input[type="submit"], input[type="submit"]:focus, input[type="button"], input[type="button"]:focus {
-	-moz-border-radius: 8px;
-	-webkit-border-radius: 8px;	
+	border-radius:5px;
 	font-size:.8rem;
 }
 
@@ -189,6 +188,7 @@ div.tickCellContent, div.emptyCellContent {
 
 .tickStatus {
 	text-decoration: underline;
+	cursor: pointer;
 }
 
 
@@ -259,6 +259,20 @@ div.tickCellContent, div.emptyCellContent {
 
 	opacity: 1 !important;
 
+}
+
+.existingTickDialogueBox {
+	top: 50px;
+	left: 300px;
+
+	background-color:#EEEEFF;	
+
+	width: 550px;
+	height: 400px;
+	padding: 10px;
+	padding-top: 30px;
+
+	opacity: 1 !important;
 }
 
 
