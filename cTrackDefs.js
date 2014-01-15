@@ -10,10 +10,10 @@ cTrack.tickStatusConfig.Cast	= { descShort: "Cast", descLong: "Casting", stType:
 cTrack.tickStatusConfig.Move	= { descShort: "Move", descLong: "Move", stType: "acting"};
 
 cTrack.tickStatusConfig.Wait	= { descShort: "Wait", descLong: "Waiting", stType: "held"};
-cTrack.tickStatusConfig.HAtt 	= { descShort: "H.Att", descLong: "Held - Attacking", stType: "held"};
-cTrack.tickStatusConfig.HFire	= { descShort: "H.Fire", descLong: "Held - Firing", stType: "held"};
-cTrack.tickStatusConfig.HCast	= { descShort: "H.Cast", descLong: "Held - Casting", stType: "held"};
-cTrack.tickStatusConfig.HOther	= { descShort: "H.Other", descLong: "Held - Other", stType: "held"};
+cTrack.tickStatusConfig.HAtt 	= { descShort: "HAtt", descLong: "Held - Attacking", stType: "held"};
+cTrack.tickStatusConfig.HFire	= { descShort: "HFire", descLong: "Held - Firing", stType: "held"};
+cTrack.tickStatusConfig.HCast	= { descShort: "HCast", descLong: "Held - Casting", stType: "held"};
+cTrack.tickStatusConfig.HOther	= { descShort: "HOther", descLong: "Held - Other", stType: "held"};
 
 cTrack.tickStatusConfig.Focus	= { descShort: "Focus", descLong: "Re-focusing", stType: "focus"};
 

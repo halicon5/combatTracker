@@ -16,6 +16,9 @@ cTrack.tickUI = function(params) {
 	this.elements.div = undefined;
 	this.elements.emptyCellPopUp = undefined;
 	this.elements.editTickPopUp = undefined;
+	this.elements.forms = {};
+	this.elements.forms.thisTick = undefined;
+	this.elements.forms.nextTick = undefined;
 
 	this.subUIs = {};
 
@@ -52,6 +55,17 @@ cTrack.tickUI = function(params) {
 		return str;
 	}
 
+	cTrack.tickUI.prototype.updateTickCell = function() {
+		cTrack.log("CALL cTrack.tickUI.prototype.updateTickCell = function() [" + this + "]",1);
+		if (this.data) {
+			this.elements.tickGrid.actionStatus.innerHTML = this.data.actionStatus;
+		}
+		else {
+
+		}
+		cTrack.log("FINISH cTrack.tickUI.prototype.updateTickCell = function() [" + this + "]",-1);
+	}
+
 	cTrack.tickUI.prototype.createTickCell =function() {
 		cTrack.log("CALL cTrack.tickUI.prototype.createTickCell = function() [" + this + "]",1);
 
@@ -82,12 +96,12 @@ cTrack.tickUI = function(params) {
 		var row2 = createSuperElement("tr", ["valign","top"]);
 
 		var r1c1 = createSuperElement("td", ["innerHTML",this.data.tickId]);
-		var r1c2 = createSuperElement("td", ["innerHTML",this.data.combatStatus], ["class","tickStatus"]);
+		var r1c2 = createSuperElement("td", ["innerHTML",this.data.actionStatus], ["class","tickStatus"]);
 
 		r1c2.SCobj = this;
 		r1c2.setAttribute("onclick", "SCobj.openExistingTickDialog()");
 		
-		this.elements.tickGrid.combatStatus = r1c2;
+		this.elements.tickGrid.actionStatus = r1c2;
 
 		appendChildren(grid,row1);
 		appendChildren(row1,r1c1,r1c2);
@@ -137,12 +151,14 @@ cTrack.tickUI = function(params) {
 	cTrack.tickUI.prototype.openExistingTickDialog = function() {
 		cTrack.log("CALL cTrack.tickUI.prototype.openExistingTickDialog = function() [" + this + "]",1);
 		if (!this.UI.activePopup) {
+			var popupParams = {};
 
 			var box = document.createElement("div");
 			this.elements.dialogueBox = box;
-			this.UI.createPopupOverlay(this.elements.dialogueBox);
+			this.UI.createPopupOverlay(this.elements.dialogueBox, popupParams);
 			box.setAttribute("class", "DialogueBox existingTickDialogueBox");
-			var close = this.UI.createPopupCloseBtn({buttonText:"Close Window"});
+			var close = this.UI.createPopupCloseBtn({context: this, callback:"updateTickCell", buttonText:"Close Window"});
+			box.appendChild(close);
 
 			var table = createSuperElement("table");
 			var r = createSuperElement("tr", ["valign","top"]);
@@ -157,7 +173,6 @@ cTrack.tickUI = function(params) {
 			this.thisTickDialogForm(r1c1);
 			this.nextTickDialogForm(r1c2);
 
-			box.appendChild(close);
 			appendChildren(this.UI.dispbox,box);
 		}	
 		cTrack.log("FINISH cTrack.tickUI.prototype.openExistingTickDialog = function() [" + this + "]",-1);
@@ -168,6 +183,7 @@ cTrack.tickUI = function(params) {
 		cTrack.log("CALL cTrack.tickUI.prototype.thisTickDialogForm = function() [" + this + "]",1);
 		var head = createSuperElement("h3", ["innerHTML", "Tick " + this.data.tickId]);
 		appendChildren(targ,head);
+		appendChildren(targ,this.createActionStatusList("thisTick",this.data));
 		cTrack.log("FINISH cTrack.tickUI.prototype.thisTickDialogForm = function() [" + this + "]",-1);
 	}
 
@@ -176,4 +192,41 @@ cTrack.tickUI = function(params) {
 		var head = createSuperElement("h3", ["innerHTML", "Next Tick - Changes will delete all future ticks for this combatant!"]);
 		appendChildren(targ,head);
 		cTrack.log("FINISH cTrack.tickUI.prototype.nextTickDialogForm = function() [" + this + "]",-1);
+	}
+
+	cTrack.tickUI.prototype.createActionStatusList = function(groupName, tickDat) {
+		cTrack.log("CALL cTrack.tickUI.prototype.createActionStatusList = function() [" + this + "]",1);
+
+		if (!tickDat) {
+			tickDat = new cTrack.tickDAT({});
+		}
+
+		var listDiv = createSuperElement("div");
+		var list = {};
+		for (var i = 0; i < cTrack.tickStatusOpts.length; i++) {
+			var opt = {};
+			var optName = cTrack.tickStatusOpts[i].descShort;
+			var d = createSuperElement("div");
+			list[optName] = opt;
+
+			opt.btnRadio = createSuperElement("input",["type", "radio"],["name",groupName], ["id",groupName + "_" + optName], ["value",optName] );
+			opt.btnRadio.setAttribute("onchange","this.SCobj.changeTickActionStatus(this.value, this.SCdata);");
+			if (tickDat.actionStatus === optName) {
+				opt.btnRadio.setAttribute("selected",true);
+				opt.btnRadio.setAttribute("checked",true);
+			}
+			opt.btnRadio.SCdata = tickDat;
+			opt.btnRadio.SCobj = this;
+			opt.txtLabel = createSuperElement("label",["for",groupName + "_" + optName],["innerHTML",cTrack.tickStatusOpts[i].descLong]);
+
+			appendChildren(d,opt.btnRadio, opt.txtLabel);
+			appendChildren(listDiv,d);
+		}
+
+		cTrack.log("FINISH cTrack.tickUI.prototype.createActionStatusList = function() [" + this + "]",-1);
+		return listDiv;
+	}
+
+	cTrack.tickUI.prototype.changeTickActionStatus = function (actStatus, dataObj) {
+		dataObj.actionStatus = actStatus;
 	}

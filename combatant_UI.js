@@ -197,11 +197,14 @@ cTrack.combatantUI = function(params) {
 		for (var t in this.subUIs.ticks ) {
 			cTrack.removeDescendents(this.elements.tickCells[t],1);
 			appendChildren(this.elements.tickCells[t],this.subUIs.ticks[t].elements.tickCellBox);
+			this.subUIs.ticks[t].updateTickCell();
 		}
 		for (var t in this.subUIs.emptyTicks ) {
 			cTrack.removeDescendents(this.elements.tickCells[t],1);
 			appendChildren(this.elements.tickCells[t],this.subUIs.emptyTicks[t].elements.tickCellBox);			
+			this.subUIs.emptyTicks[t].updateTickCell();
 		}
+
 /*
 		for ( var t in this.subUIs.ticks ) {
 			if (!this.data.ticks[t]) {

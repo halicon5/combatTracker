@@ -195,8 +195,8 @@ cTrack.comManUI = function(aComManSVC, aDispBoxId) {
 		var btn = createSuperElement("input", ["type","button"], ["value",params.buttonText] );
 		btn.btnParams = params;
 		btn.SCobj = this;
-		if (params.context && params.context[callback] ) {
-			btn.setAttribute ("onclick", "if (this.btnParams.context[this.btnParams.callback]() ) { this.SCobj.removePopupOverlay(); }");
+		if (params.context && params.callback && params.context[params.callback] ) {
+			btn.setAttribute ("onclick", "if (this.btnParams.context[this.btnParams.callback]() !== false) { this.SCobj.removePopupOverlay(); }");
 		} else if (params.callback) {
 			btn.setAttribute ("onclick", "if (this.btnParams.callback() ) { this.SCobj.removePopupOverlay(); }");
 		} else {
