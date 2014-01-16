@@ -1,5 +1,6 @@
 
 cTrack.tickStatusConfig = {};
+cTrack.tickStatusConfig.Declare 	= { descShort: "Declare", descLong: "Declare Action", stType: "open"};
 cTrack.tickStatusConfig.Open 	= { descShort: "Open", descLong: "Open", stType: "open"};
 cTrack.tickStatusConfig.Eng 	= { descShort: "Eng", descLong: "Engaged but open", stType: "open"};
 cTrack.tickStatusConfig.Inter	= { descShort: "Inter", descLong: "Interrupted", stType: "open"};
@@ -19,6 +20,7 @@ cTrack.tickStatusConfig.Focus	= { descShort: "Focus", descLong: "Re-focusing", s
 
 var i = 0;
 cTrack.tickStatusOpts = [];
+cTrack.tickStatusOpts[i++] = cTrack.tickStatusConfig.Declare;
 cTrack.tickStatusOpts[i++] = cTrack.tickStatusConfig.Open;
 cTrack.tickStatusOpts[i++] = cTrack.tickStatusConfig.Eng;
 cTrack.tickStatusOpts[i++] = cTrack.tickStatusConfig.Inter;

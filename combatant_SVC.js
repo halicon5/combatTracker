@@ -48,7 +48,7 @@ cTrack.combatantSVC = function(aCombatantDAT, aParentEngagement) {
 	}
 
 	cTrack.combatantSVC.prototype.addInitialTick = function() {
-		var dat = { tickId: this.d.initiative, combatStatus:"open"};
+		var dat = { tickId: this.d.initiative, actionStatus:"Declare", declaredTickId: this.d.initiative};
 		this.addTick(dat);
 	}
 

@@ -171,7 +171,7 @@ cTrack.tickUI = function(params) {
 			appendChildren(r,r1c1,r1c2);
 
 			this.thisTickDialogForm(r1c1);
-			this.nextTickDialogForm(r1c2);
+//			this.nextTickDialogForm(r1c2);
 
 			appendChildren(this.UI.dispbox,box);
 		}	
@@ -183,7 +183,7 @@ cTrack.tickUI = function(params) {
 		cTrack.log("CALL cTrack.tickUI.prototype.thisTickDialogForm = function() [" + this + "]",1);
 		var head = createSuperElement("h3", ["innerHTML", "Tick " + this.data.tickId]);
 		appendChildren(targ,head);
-		appendChildren(targ,this.createActionStatusList("thisTick",this.data));
+		this.createTickDetailsForm("thisTick", targ);
 		cTrack.log("FINISH cTrack.tickUI.prototype.thisTickDialogForm = function() [" + this + "]",-1);
 	}
 
@@ -194,6 +194,27 @@ cTrack.tickUI = function(params) {
 		cTrack.log("FINISH cTrack.tickUI.prototype.nextTickDialogForm = function() [" + this + "]",-1);
 	}
 
+	cTrack.tickUI.prototype.createTickDetailsForm = function(groupName, targ) {
+		cTrack.log("CALL cTrack.tickUI.prototype.createTickDetailsForm = function() [" + this + "]",1);
+
+		var div = createSuperElement("div", ["innerHTML", cTrack.tickStatusConfig[this.data.actionStatus].descLong + ' declared on tick ' + this.data.declaredTickId] );
+		var inpDecAct = createSuperElement("input", ["value",this.data.declaredAction], ["size",60]);
+		appendChildren(targ,div,"Declared Action:",inpDecAct);
+
+		var resDiv = createSuperElement("div");
+		var btnResolve = createSuperElement("input",["type", "checkbox"],['class','largeCheck'],["name",groupName + 'resolve'], ["id",groupName + "resolve"], ["value","R"] );
+		if (this.data.resolved === 'R') {
+			btnResolve.setAttribute("checked",true);
+		}
+		btnResolve.setAttribute("onchange","alert('resolve');");
+		var txtResolveLbl = createSuperElement("label", ["for",groupName + "resolve"], ["innerHTML","-Resolve tick"]);
+		appendChildren(resDiv,btnResolve,txtResolveLbl);
+
+		appendChildren(targ, resDiv, this.createActionStatusList("thisTick",this.data));
+
+		cTrack.log("FINISH cTrack.tickUI.prototype.createTickDetailsForm = function() [" + this + "]",-1);
+	}
+
 	cTrack.tickUI.prototype.createActionStatusList = function(groupName, tickDat) {
 		cTrack.log("CALL cTrack.tickUI.prototype.createActionStatusList = function() [" + this + "]",1);
 
@@ -201,9 +222,16 @@ cTrack.tickUI = function(params) {
 			tickDat = new cTrack.tickDAT({});
 		}
 
-		var listDiv = createSuperElement("div");
+		var tbl = createSuperElement("table");
+		var row = createSuperElement("row");
+		appendChildren(tbl, row);
 		var list = {};
+		var col = "";
 		for (var i = 0; i < cTrack.tickStatusOpts.length; i++) {
+			if (i%4 == 0) {
+				col = createSuperElement("td", ["valign","top"]);
+				appendChildren(row,col);
+			}
 			var opt = {};
 			var optName = cTrack.tickStatusOpts[i].descShort;
 			var d = createSuperElement("div");
@@ -220,11 +248,11 @@ cTrack.tickUI = function(params) {
 			opt.txtLabel = createSuperElement("label",["for",groupName + "_" + optName],["innerHTML",cTrack.tickStatusOpts[i].descLong]);
 
 			appendChildren(d,opt.btnRadio, opt.txtLabel);
-			appendChildren(listDiv,d);
+			appendChildren(col,d);
 		}
 
 		cTrack.log("FINISH cTrack.tickUI.prototype.createActionStatusList = function() [" + this + "]",-1);
-		return listDiv;
+		return tbl;
 	}
 
 	cTrack.tickUI.prototype.changeTickActionStatus = function (actStatus, dataObj) {
