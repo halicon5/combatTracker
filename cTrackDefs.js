@@ -34,3 +34,19 @@ cTrack.tickStatusOpts[i++] = cTrack.tickStatusConfig.HFire;
 cTrack.tickStatusOpts[i++] = cTrack.tickStatusConfig.HCast;
 cTrack.tickStatusOpts[i++] = cTrack.tickStatusConfig.HOther;
 cTrack.tickStatusOpts[i++] = cTrack.tickStatusConfig.Focus;
+
+
+cTrack.resolveOpts = {};
+cTrack.resolveOpts.U = { descShort: "U", descLong: "Unresolved", nextStatus: ""};
+cTrack.resolveOpts.Resolve = { descShort: "Resolve", descLong: "Resolve and leave open", nextStatus: "undeclared"};
+cTrack.resolveOpts.ResolveCopy = { descShort: "ResolveRepeat", descLong: "Repeat this action", nextStatus: ""};
+cTrack.resolveOpts.ResolveNew = { descShort: "ResolveNew", descLong: "Resolve and set new action", nextStatus: ""};
+cTrack.resolveOpts.ResolveRemove = { descShort: "ResolveRemove", descLong: "Resolve and remove from conflict", nextStatus: "" };
+
+cTrack.resolveOptsList = [];
+i = 0;
+cTrack.resolveOptsList[i++] = cTrack.resolveOpts.U;
+cTrack.resolveOptsList[i++] = cTrack.resolveOpts.Resolve;
+cTrack.resolveOptsList[i++] = cTrack.resolveOpts.ResolveCopy;
+cTrack.resolveOptsList[i++] = cTrack.resolveOpts.ResolveNew;
+cTrack.resolveOptsList[i++] = cTrack.resolveOpts.ResolveRemove;

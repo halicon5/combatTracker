@@ -202,17 +202,64 @@ cTrack.tickUI = function(params) {
 		appendChildren(targ,div,"Declared Action:",inpDecAct);
 
 		var resDiv = createSuperElement("div");
+
+/*
 		var btnResolve = createSuperElement("input",["type", "checkbox"],['class','largeCheck'],["name",groupName + 'resolve'], ["id",groupName + "resolve"], ["value","R"] );
 		if (this.data.resolved === 'R') {
 			btnResolve.setAttribute("checked",true);
 		}
-		btnResolve.setAttribute("onchange","alert('resolve');");
+		btnResolve.SCobj = this;
+		btnResolve.setAttribute("onchange","this.SCobj.toggleResolveTickCheckbox();");
 		var txtResolveLbl = createSuperElement("label", ["for",groupName + "resolve"], ["innerHTML","-Resolve tick"]);
 		appendChildren(resDiv,btnResolve,txtResolveLbl);
-
+*/
+		appendChildren(resDiv, this.createResolutionRadioList("thisTickResolve"));
 		appendChildren(targ, resDiv, this.createActionStatusList("thisTick",this.data));
 
 		cTrack.log("FINISH cTrack.tickUI.prototype.createTickDetailsForm = function() [" + this + "]",-1);
+	}
+
+	cTrack.tickUI.prototype.createResolutionRadioList = function(groupName) {
+		cTrack.log("CALL cTrack.tickUI.prototype.createResolutionRadioList = function() [" + this + "]",1);
+
+		var tbl = createSuperElement("table");
+		if (this.data) {
+			var row = createSuperElement("row", ["valign","top"]);
+			appendChildren(tbl, row);
+
+			var list = {};
+			var col = "";
+
+			for (var i = 0; i < cTrack.resolveOptsList.length; i++) {
+				if (i%3==0) {
+					col = createSuperElement("td");
+					appendChildren(row,col);
+				}
+
+				var opt = {};
+				var optName = cTrack.resolveOptsList[i].descShort;
+				var d = createSuperElement("div");
+				list[optName] = opt;
+
+				opt.btnRadio = createSuperElement("input",["type", "radio"],['class','largeCheck'],["name",groupName], ["id",groupName + "_" + optName], ["value",optName] );
+				opt.btnRadio.setAttribute("onchange","this.SCobj.changeTickResolutionStatus(this.value);");
+				if (this.data.resolved === optName) {
+					opt.btnRadio.setAttribute("selected",true);
+					opt.btnRadio.setAttribute("checked",true);
+				}
+				opt.btnRadio.SCdata = this.data;
+				opt.btnRadio.SCobj = this;
+				opt.txtLabel = createSuperElement("label",["for",groupName + "_" + optName],["innerHTML",cTrack.resolveOptsList[i].descLong]);
+
+				appendChildren(d,opt.btnRadio, opt.txtLabel);
+				appendChildren(col,d);
+			}
+		}
+		else {
+			cTrack.log("ERROR cTrack.tickUI.prototype.createResolutionRadioList = function() [" + this + "] No data node");
+		}
+		return tbl;
+		cTrack.log("FINISH cTrack.tickUI.prototype.createResolutionRadioList = function() [" + this + "]",-1);
 	}
 
 	cTrack.tickUI.prototype.createActionStatusList = function(groupName, tickDat) {
@@ -223,13 +270,13 @@ cTrack.tickUI = function(params) {
 		}
 
 		var tbl = createSuperElement("table");
-		var row = createSuperElement("row");
+		var row = createSuperElement("row",["valign","top"]);
 		appendChildren(tbl, row);
 		var list = {};
 		var col = "";
 		for (var i = 0; i < cTrack.tickStatusOpts.length; i++) {
 			if (i%4 == 0) {
-				col = createSuperElement("td", ["valign","top"]);
+				col = createSuperElement("td");
 				appendChildren(row,col);
 			}
 			var opt = {};
@@ -258,3 +305,8 @@ cTrack.tickUI = function(params) {
 	cTrack.tickUI.prototype.changeTickActionStatus = function (actStatus, dataObj) {
 		dataObj.actionStatus = actStatus;
 	}
+
+	cTrack.tickUI.prototype.changeTickResolutionStatus = function(resStatus) {
+		alert(resStatus);
+	}
+
