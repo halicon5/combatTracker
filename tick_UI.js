@@ -203,18 +203,9 @@ cTrack.tickUI = function(params) {
 
 		var resDiv = createSuperElement("div");
 
-/*
-		var btnResolve = createSuperElement("input",["type", "checkbox"],['class','largeCheck'],["name",groupName + 'resolve'], ["id",groupName + "resolve"], ["value","R"] );
-		if (this.data.resolved === 'R') {
-			btnResolve.setAttribute("checked",true);
-		}
-		btnResolve.SCobj = this;
-		btnResolve.setAttribute("onchange","this.SCobj.toggleResolveTickCheckbox();");
-		var txtResolveLbl = createSuperElement("label", ["for",groupName + "resolve"], ["innerHTML","-Resolve tick"]);
-		appendChildren(resDiv,btnResolve,txtResolveLbl);
-*/
 		appendChildren(resDiv, this.createResolutionRadioList("thisTickResolve"));
-		appendChildren(targ, resDiv, this.createActionStatusList("thisTick",this.data));
+		appendChildren(targ, resDiv, createSuperElement("hr"), createSuperElement("h4", ["innerHTML", "Upcoming Action"]), 
+			this.createActionStatusList("thisTick",this.data));
 
 		cTrack.log("FINISH cTrack.tickUI.prototype.createTickDetailsForm = function() [" + this + "]",-1);
 	}
