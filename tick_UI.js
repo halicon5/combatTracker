@@ -298,6 +298,62 @@ cTrack.tickUI = function(params) {
 	}
 
 	cTrack.tickUI.prototype.changeTickResolutionStatus = function(resStatus) {
-		alert(resStatus);
+		cTrack.log("CALL cTrack.tickUI.prototype.changeTickResolutionStatus = function(" + resStatus + ") [" + this + "]",1);
+
+		switch(resStatus) {
+			case "U":
+				this.formPrefill_unresolved();
+				break;
+			case "Resolve":
+				this.formPrefill_resolveTick();
+				break;
+			case "ResolveCopy":
+				this.formPrefill_resolveCopyCurrentTick();
+				break;
+			case "ResolveNew":
+				this.formPrefill_resolveNewTick();
+				break;
+			case "ResolveRemove":
+				this.formPrefill_resolveRemove();
+				break;
+			default:
+				this.formPrefill_unresolved();
+				break;
+		}
+
+		cTrack.log("FINISH cTrack.tickUI.prototype.changeTickResolutionStatus = function(" + resStatus + ") [" + this + "]",-1);
 	}
 
+	cTrack.tickUI.prototype.formPrefill_unresolved = function() {
+		cTrack.log("CALL cTrack.tickUI.prototype.formPrefill_unresolved = function() [" + this + "]",1);
+
+		cTrack.log("FINISH cTrack.tickUI.prototype.formPrefill_unresolved = function() [" + this + "]",-1);
+	}
+
+	cTrack.tickUI.prototype.formPrefill_resolveTick = function() {
+		cTrack.log("CALL cTrack.tickUI.prototype.formPrefill_resolveTick = function() [" + this + "]",1);
+
+		cTrack.log("FINISH cTrack.tickUI.prototype.formPrefill_resolveTick = function() [" + this + "]",-1);
+		
+	}
+
+	cTrack.tickUI.prototype.formPrefill_resolveCopyCurrentTick = function() {
+		cTrack.log("CALL cTrack.tickUI.prototype.formPrefill_resolveCopyCurrentTick = function() [" + this + "]",1);
+
+		cTrack.log("FINISH cTrack.tickUI.prototype.formPrefill_resolveCopyCurrentTick = function() [" + this + "]",-1);
+		
+	}
+
+	cTrack.tickUI.prototype.formPrefill_resolveNewTick = function() {
+		cTrack.log("CALL cTrack.tickUI.prototype.formPrefill_resolveNewTick = function() [" + this + "]",1);
+
+		cTrack.log("FINISH cTrack.tickUI.prototype.formPrefill_resolveNewTick = function() [" + this + "]",-1);
+		
+	}
+
+	cTrack.tickUI.prototype.formPrefill_resolveRemove = function() {
+		cTrack.log("CALL cTrack.tickUI.prototype.formPrefill_resolveRemove = function() [" + this + "]",1);
+
+		cTrack.log("FINISH cTrack.tickUI.prototype.formPrefill_resolveRemove = function() [" + this + "]",-1);
+		
+	}

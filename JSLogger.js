@@ -21,6 +21,7 @@ var logger = function(debugBox, frequency) {
 			appendChildren(this.debugBox, this.stopBtn, this.output);
 			var self = this;
 			this.intervalId = setInterval( function() {self.updateDisplay();}, this.frequency );
+
 		}
 	}
 
