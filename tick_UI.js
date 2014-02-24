@@ -124,6 +124,26 @@ cTrack.tickUI = function(params) {
 	}
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	cTrack.tickUI.prototype.openEmptyTickDialog = function() {
 		cTrack.log("CALL cTrack.tickUI.prototype.openEmptyTickDialog = function() [" + this + "]",1);
 		if (!this.UI.activePopup) {
@@ -182,8 +202,12 @@ cTrack.tickUI = function(params) {
 	cTrack.tickUI.prototype.thisTickDialogForm = function(targ) {
 		cTrack.log("CALL cTrack.tickUI.prototype.thisTickDialogForm = function() [" + this + "]",1);
 		var head = createSuperElement("h3", ["innerHTML", "Tick " + this.data.tickId]);
-		appendChildren(targ,head);
-		this.createTickDetailsForm("thisTick", targ);
+
+		var f = createSuperElement("form");
+		this.elements.forms.thisTick = f;
+
+		appendChildren(targ,head, f);
+		this.createTickDetailsForm("thisTick", f);
 		cTrack.log("FINISH cTrack.tickUI.prototype.thisTickDialogForm = function() [" + this + "]",-1);
 	}
 
@@ -194,18 +218,20 @@ cTrack.tickUI = function(params) {
 		cTrack.log("FINISH cTrack.tickUI.prototype.nextTickDialogForm = function() [" + this + "]",-1);
 	}
 
-	cTrack.tickUI.prototype.createTickDetailsForm = function(groupName, targ) {
+	cTrack.tickUI.prototype.createTickDetailsForm = function(groupName, targForm) {
 		cTrack.log("CALL cTrack.tickUI.prototype.createTickDetailsForm = function() [" + this + "]",1);
 
 		var div = createSuperElement("div", ["innerHTML", cTrack.tickStatusConfig[this.data.actionStatus].descLong + ' declared on tick ' + this.data.declaredTickId] );
-		var inpDecAct = createSuperElement("input", ["value",this.data.declaredAction], ["size",60]);
-		appendChildren(targ,div,"Declared Action:",inpDecAct);
+		var inpDecAct = createSuperElement("input", ["name", groupName + "_declaredAction"], ["value",this.data.declaredAction], ["size",60]);
+		appendChildren(targForm,div,"Declared Action:",inpDecAct);
 
 		var resDiv = createSuperElement("div");
 
 		appendChildren(resDiv, this.createResolutionRadioList("thisTickResolve"));
-		appendChildren(targ, resDiv, createSuperElement("hr"), createSuperElement("h4", ["innerHTML", "Upcoming Action"]), 
+		appendChildren(targForm, resDiv, createSuperElement("hr"), createSuperElement("h4", ["innerHTML", "Upcoming Action"]), 
 			this.createActionStatusList("thisTick",this.data));
+
+
 
 		cTrack.log("FINISH cTrack.tickUI.prototype.createTickDetailsForm = function() [" + this + "]",-1);
 	}
